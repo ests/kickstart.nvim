@@ -1013,7 +1013,7 @@ local function save_all_and_quit()
   local buffers = vim.api.nvim_list_bufs()
   for _, buf in ipairs(buffers) do
     -- Check if the buffer is loaded, modifiable, and has a filename
-    if vim.api.nvim_buf_is_loaded(buf) and vim.api.nvim_buf_get_option(buf, 'modifiable') and vim.api.nvim_buf_get_name(buf) ~= '' then
+    if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].modifiable and vim.api.nvim_buf_get_name(buf) ~= '' then
       -- Save the buffer
       vim.api.nvim_buf_call(buf, function()
         vim.cmd 'silent update'
