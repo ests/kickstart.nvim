@@ -687,7 +687,23 @@ require('lazy').setup({
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
         return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
       end
-      luasnip.config.setup {}
+
+      require('luasnip.loaders.from_lua').lazy_load {
+        paths = { '~/.config/nvim/LuaSnip' },
+      }
+
+      local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
+      cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+
+      luasnip.config.setup {
+        history = false,
+        -- store_selection_keys = "<Tab>",
+        enable_autosnippets = false,
+        delete_check_events = 'TextChanged,InsertLeave',
+        region_check_event = 'InsertEnter',
+      }
+
+      vim.api.nvim_set_hl(0, 'CmpGhostText', { link = 'Comment', default = true })
 
       cmp.setup {
         snippet = {
