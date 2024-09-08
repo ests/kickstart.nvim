@@ -161,6 +161,8 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
+  'famiu/bufdelete.nvim',
+
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
@@ -910,6 +912,53 @@ require('lazy').setup({
     },
   },
 })
+
+-- TODO: move those to separate files
+local keymap = vim.keymap.set
+
+-- Map Ctrl+s to save the current buffer
+vim.api.nvim_set_keymap('n', '<C-s>', ':w<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<C-s>', '<Esc>:w<CR>', { noremap = true, silent = true })
+
+-- custom basics
+keymap('n', 'Q', '<Nop>', { noremap = true, silent = true })
+keymap('n', 'q', '<Nop>', { noremap = true, silent = true })
+keymap('n', '*', '*<c-o>', { noremap = true, silent = true })
+keymap('n', '<leader>x', '<cmd>bdelete<cr>', { noremap = true, silent = true })
+
+-- save all quit
+local function save_all_and_quit()
+  -- Get the list of all buffers
+  local buffers = vim.api.nvim_list_bufs()
+  for _, buf in ipairs(buffers) do
+    -- Check if the buffer is loaded, modifiable, and has a filename
+    if vim.api.nvim_buf_is_loaded(buf) and vim.api.nvim_buf_get_option(buf, 'modifiable') and vim.api.nvim_buf_get_name(buf) ~= '' then
+      -- Save the buffer
+      vim.api.nvim_buf_call(buf, function()
+        vim.cmd 'silent update'
+      end)
+    end
+  end
+  -- Quit Neovim, closing all windows and discarding any changes in buffers that couldn't be saved
+  vim.cmd 'qa!'
+end
+keymap('n', '<c-x>', '', { noremap = true, silent = true, callback = save_all_and_quit })
+
+-- movement
+keymap('n', '<c-h>', '<c-w>h', { noremap = true, silent = true })
+keymap('n', '<c-j>', '<c-w>j', { noremap = true, silent = true })
+keymap('n', '<c-k>', '<c-w>k', { noremap = true, silent = true })
+keymap('n', '<c-l>', '<c-w>l', { noremap = true, silent = true })
+
+-- toggle last buffers
+keymap('n', ',,', '<cmd>b#<cr>', { noremap = true, silent = true })
+
+keymap('v', 'K', ":m '<-2<CR>gv=gv", { noremap = true })
+keymap('v', 'J', ":m '>+1<CR>gv=gv", { noremap = true })
+
+-- visual indent
+keymap('v', '<', '<gv', { noremap = true, silent = true })
+keymap('v', '>', '>gv', { noremap = true, silent = true })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

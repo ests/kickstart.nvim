@@ -7,4 +7,7 @@ return {
     'nvim-telescope/telescope.nvim', -- optional
   },
   config = true,
+  keys = {
+    { '<leader>n', '<cmd>Neogit<CR>', desc = ':Neogit' },
+  },
 }
