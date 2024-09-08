@@ -509,6 +509,10 @@ require('lazy').setup({
               end,
             })
           end
+          local bgcl = '#2e3842'
+          vim.api.nvim_set_hl(0, 'LspReferenceText', { bg = bgcl, italic = false, bold = true, underline = true })
+          vim.api.nvim_set_hl(0, 'LspReferenceRead', { bg = bgcl, italic = false, bold = true, underline = true })
+          vim.api.nvim_set_hl(0, 'LspReferenceWrite', { bg = bgcl, italic = false, bold = true, underline = true })
 
           -- The following code creates a keymap to toggle inlay hints in your
           -- code, if the language server you are using supports them

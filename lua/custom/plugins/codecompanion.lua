@@ -11,4 +11,15 @@ return {
     },
   },
   config = true,
+  opts = {
+    adapters = {
+      openai = function()
+        return require('codecompanion.adapters').extend('openai', {
+          env = {
+            api_key = 'cmd:pass open_ai',
+          },
+        })
+      end,
+    },
+  },
 }
