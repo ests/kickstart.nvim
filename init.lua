@@ -681,7 +681,12 @@ require('lazy').setup({
     config = function()
       -- See `:help cmp`
       local cmp = require 'cmp'
+      local cmp_window = require 'cmp.config.window'
       local luasnip = require 'luasnip'
+      local has_words_before = function()
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
+      end
       luasnip.config.setup {}
 
       cmp.setup {
@@ -690,26 +695,82 @@ require('lazy').setup({
             luasnip.lsp_expand(args.body)
           end,
         },
-        completion = { completeopt = 'menu,menuone,noinsert' },
+        completion = {
+          keyword_length = 2,
+          completeopt = 'menu,menuone,noinsert',
+        },
+        window = {
+          completion = cmp_window.bordered(),
+          documentation = cmp_window.bordered(),
+        },
+        -- performance = {
+        --   debounce = 180,
+        --   throttle = 60,
+        -- },
+        preselect = cmp.PreselectMode.None,
+        matching = {
+          disallow_symbol_nonprefix_matching = true,
+          disallow_fuzzy_matching = true,
+          disallow_fullfuzzy_matching = true,
+          disallow_partial_fuzzy_matching = true,
+          disallow_partial_matching = true,
+          disallow_prefix_unmatching = true,
+        },
 
         -- For an understanding of why these mappings were
         -- chosen, you will need to read `:help ins-completion`
         --
         -- No, but seriously. Please read `:help ins-completion`, it is really good!
         mapping = cmp.mapping.preset.insert {
+          ['<C-e>'] = cmp.mapping.abort(),
+          -- Scroll the documentation window [b]ack / [f]orward
+          ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-f>'] = cmp.mapping.scroll_docs(4),
           -- Select the [n]ext item
           ['<C-n>'] = cmp.mapping.select_next_item(),
           -- Select the [p]revious item
           ['<C-p>'] = cmp.mapping.select_prev_item(),
-
-          -- Scroll the documentation window [b]ack / [f]orward
-          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
-
           -- Accept ([y]es) the completion.
           --  This will auto-import if your LSP supports it.
           --  This will expand snippets if the LSP sent a snippet.
-          ['<C-y>'] = cmp.mapping.confirm { select = true },
+          ['<C-Space>'] = cmp.mapping.complete {},
+          ['<C-y>'] = cmp.mapping {
+            i = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = true },
+            c = function(fallback)
+              if cmp.visible() then
+                cmp.confirm { behavior = cmp.ConfirmBehavior.Replace, select = true }
+              else
+                fallback()
+              end
+            end,
+          },
+          ['<CR>'] = cmp.mapping.confirm {
+            behavior = cmp.ConfirmBehavior.Insert,
+            select = false,
+          },
+          ['<Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert }, { 'i', 'c' })
+            elseif luasnip.jumpable(1) then
+              luasnip.jump(1)
+            elseif luasnip.expand_or_locally_jumpable() then
+              luasnip.expand_or_jump()
+            elseif has_words_before() then
+              cmp.complete()
+            else
+              fallback()
+            end
+          end, { 'i', 's' }),
+          ['<S-Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert }, { 'i', 'c' })
+            elseif luasnip.jumpable(-1) then
+              -- if luasnip.jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
+          end, { 'i', 's' }),
 
           -- If you prefer more traditional completion keymaps,
           -- you can uncomment the following lines
@@ -720,7 +781,7 @@ require('lazy').setup({
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
           --  completions whenever it has completion options available.
-          ['<C-Space>'] = cmp.mapping.complete {},
+          -- ['<C-Space>'] = cmp.mapping.complete {},
 
           -- Think of <c-l> as moving to the right of your snippet expansion.
           --  So if you have a snippet that's like:
