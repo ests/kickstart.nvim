@@ -12,7 +12,7 @@ return {
         highlight = { 'LineNr' },
         char = '│',
       },
-      scope = { show_start = true, show_end = false },
+      scope = { show_start = false, show_end = false },
     },
   },
 }

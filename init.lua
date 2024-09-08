@@ -45,6 +45,7 @@ vim.opt.breakindent = true
 
 -- Save undo history
 vim.opt.undofile = true
+vim.opt.ul = 500 -- undolevel
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
@@ -89,6 +90,8 @@ vim.opt.undofile = true
 vim.opt.undodir = '/tmp/vim/undo'
 vim.opt.viewdir = '/tmp/vim/viewdir'
 vim.opt.conceallevel = 2
+-- hybrid relativenumbers
+vim.o.relativenumber = true
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
