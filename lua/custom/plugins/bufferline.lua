@@ -1,8 +1,8 @@
 -- https://github.com/akinsho/bufferline.nvim
 return {
   'akinsho/bufferline.nvim',
-  version = '*',
-  dependencies = 'nvim-tree/nvim-web-devicons',
+  event = 'VeryLazy',
+  dependencies = 'nim-tree/nvim-web-devicons',
   keys = {
     { '<tab>', '<cmd>BufferLineCycleNext<cr>' },
     { '<s-tab>', '<cmd>BufferLineCyclePrev<cr>' },
@@ -44,34 +44,57 @@ return {
         require('bufferline').go_to(6, true)
       end,
     },
+    {
+      '<leader>7',
+      function()
+        require('bufferline').go_to(7, true)
+      end,
+    },
   },
-  config = function()
-    require('bufferline').setup {
-      options = {
-        close_command = 'Bdelete %d', -- can be a string | function, | false see "Mouse actions"
-        right_mouse_command = 'Bdelete %d', -- can be a string | function | false, see "Mouse actions"
-        left_mouse_command = 'buffer %d', -- can be a string | function, | false see "Mouse actions"
-        middle_mouse_command = 'Bdelete! %d', -- can be a string | function, | false see "Mouse actions"
-        hover = {
-          enabled = true,
-          delay = 20,
-          hover = { 'close' },
-        },
-        separator_style = 'slant',
-        -- diagnostics = 'nvmim_lsp',
-        -- numbers = function(opts)
-        --   return string.format('%s|%s', opts.id, opts.raise(opts.ordinal))
-        -- end,
-        sort_by = 'inser_after_current',
-        -- diagnostics_indicator = function(count, level, diagnostics_dict, context)
-        --   local s = ' '
-        --   for e, n in pairs(diagnostics_dict) do
-        --     local sym = e == 'error' and ' ' or (e == 'warning' and ' ' or '')
-        --     s = s .. n .. sym
-        --   end
-        --   return s
-        -- end,
+  opts = {
+    options = {
+      close_command = 'Bdelete %d', -- can be a string | function, | false see "Mouse actions"
+      right_mouse_command = 'Bdelete %d', -- can be a string | function | false, see "Mouse actions"
+      left_mouse_command = 'buffer %d', -- can be a string | function, | false see "Mouse actions"
+      middle_mouse_command = 'Bdelete! %d', -- can be a string | function, | false see "Mouse actions"
+      diagnostics = 'nvim_lsp',
+      hover = {
+        enabled = true,
+        delay = 20,
+        hover = { 'close' },
       },
-    }
+      offsets = {
+        {
+          filetype = 'neo-tree',
+          text = 'Neo-tree',
+          highlight = 'Directory',
+          text_align = 'left',
+        },
+      },
+      separator_style = 'slant',
+      numbers = function(opts)
+        return string.format('%s|%s', opts.id, opts.raise(opts.ordinal))
+      end,
+      sort_by = 'inser_after_current',
+      diagnostics_indicator = function(count, level, diagnostics_dict, context)
+        local s = ' '
+        for e, n in pairs(diagnostics_dict) do
+          local sym = e == 'error' and ' ' or (e == 'warning' and ' ' or '')
+          s = s .. n .. sym
+        end
+        return s
+      end,
+    },
+  },
+  config = function(_, opts)
+    require('bufferline').setup(opts)
+    -- Fix bufferline when restoring a session
+    vim.api.nvim_create_autocmd({ 'BufAdd', 'BufDelete' }, {
+      callback = function()
+        vim.schedule(function()
+          pcall(nvim_bufferline)
+        end)
+      end,
+    })
   end,
 }
