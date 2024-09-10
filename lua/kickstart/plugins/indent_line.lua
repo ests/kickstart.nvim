@@ -5,7 +5,7 @@ return {
     -- See `:help ibl`
     main = 'ibl',
     opts = {
-      debounce = 300,
+      debounce = 100,
       indent = {
         smart_indent_cap = true,
         priority = 2,
@@ -13,6 +13,24 @@ return {
         char = '│',
       },
       scope = { show_start = false, show_end = false },
+      exclude = {
+        filetypes = {
+          'help',
+          'alpha',
+          'dashboard',
+          '*oil*',
+          'neo-tree',
+          'Trouble',
+          'lazy',
+          'mason',
+          'notify',
+          'toggleterm',
+          'lazyterm',
+          'asm',
+          'text',
+          'neogitstatus',
+        },
+      },
     },
   },
 }
