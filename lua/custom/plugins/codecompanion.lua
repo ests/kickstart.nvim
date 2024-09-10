@@ -11,10 +11,12 @@ return {
       opts = {},
     },
   },
+  event = 'VeryLazy',
   keys = {
-    { '<C-a>', '<cmd>CodeCompanionActions<cr>', mode = { 'v', 'n' }, desc = 'CC: Actions', noremap = true, silent = true },
-    { '<LocalLeader>a', '<cmd>CodeCompanionToggle<cr>', mode = { 'v', 'n' }, desc = 'CC: Toggle', noremap = true, silent = true },
-    { 'ga', '<cmd>CodeCompanionAdd<cr>', mode = { 'v', 'n' }, desc = 'CC: Add', noremap = true, silent = true },
+    { '<LocalLeader>cc', '<cmd>CodeCompanion<cr>', mode = { 'v', 'n' }, desc = 'Inline companion', noremap = true, silent = true },
+    { '<LocalLeader>cp', '<cmd>CodeCompanionActions<cr>', mode = { 'v', 'n' }, desc = 'Action Panel', noremap = true, silent = true },
+    { '<LocalLeader>ct', '<cmd>CodeCompanionToggle<cr>', mode = { 'v', 'n' }, desc = 'Toggle Chat Window', noremap = true, silent = true },
+    { '<LocalLeader>ca', '<cmd>CodeCompanionAdd<cr>', mode = { 'v', 'n' }, desc = 'Add', noremap = true, silent = true },
   },
   opts = {
     adapters = {
