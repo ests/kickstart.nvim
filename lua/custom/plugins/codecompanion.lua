@@ -1,3 +1,4 @@
+-- https://github.com/olimorris/codecompanion.nvim
 return {
   'olimorris/codecompanion.nvim',
   dependencies = {
@@ -10,7 +11,11 @@ return {
       opts = {},
     },
   },
-  config = true,
+  keys = {
+    { '<C-a>', '<cmd>CodeCompanionActions<cr>', mode = { 'v', 'n' }, desc = 'CC: Actions', noremap = true, silent = true },
+    { '<LocalLeader>a', '<cmd>CodeCompanionToggle<cr>', mode = { 'v', 'n' }, desc = 'CC: Toggle', noremap = true, silent = true },
+    { 'ga', '<cmd>CodeCompanionAdd<cr>', mode = { 'v', 'n' }, desc = 'CC: Add', noremap = true, silent = true },
+  },
   opts = {
     adapters = {
       openai = function()
@@ -22,4 +27,8 @@ return {
       end,
     },
   },
+  config = function(_, opts)
+    require('codecompanion').setup(opts)
+    vim.cmd [[cab cc CodeCompanion]]
+  end,
 }
