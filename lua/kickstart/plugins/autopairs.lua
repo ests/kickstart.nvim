@@ -7,7 +7,21 @@ return {
   -- Optional dependency
   dependencies = { 'hrsh7th/nvim-cmp' },
   config = function()
-    require('nvim-autopairs').setup {}
+    local npairs = require 'nvim-autopairs'
+    local Rule = require 'nvim-autopairs.rule'
+    local cond = require 'nvim-autopairs.conds'
+    require('nvim-autopairs').setup {
+      check_ts = true,
+      ts_config = {
+        lua = { 'string' }, -- it will not add a pair on that treesitter node
+        javascript = { 'template_string' },
+        java = false, -- don't check treesitter on java
+      },
+    }
+    npairs.add_rules {
+      Rule('```', '```', { 'markdown', 'vimwiki', 'rmarkdown', 'pandoc', 'codecompanion' }),
+      Rule('```.*$', '```', { 'markdown', 'vimwiki', 'rmarkdown', 'pandoc', 'codecompanion' }),
+    }
     -- If you want to automatically add `(` after selecting a function or method
     local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
     local cmp = require 'cmp'
