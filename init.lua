@@ -926,8 +926,17 @@ require('lazy').setup({
   },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
+    version = false,
+    event = { 'VeryLazy' },
+    lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
+    cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall' },
     build = ':TSUpdate',
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
+    opts_extend = { 'ensure_installed' },
+    keys = {
+      { '<c-space>', desc = 'Increment Selection' },
+      { '<bs>', desc = 'Decrement Selection', mode = 'x' },
+    },
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
       ensure_installed = {
@@ -947,6 +956,7 @@ require('lazy').setup({
         'markdown',
         'markdown_inline',
         'python',
+        'printf',
         'query',
         'regex',
         'ruby',
@@ -956,7 +966,17 @@ require('lazy').setup({
         'typescript',
         'vim',
         'vimdoc',
+        'xml',
         'yaml',
+      },
+      incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = '<C-space>',
+          node_incremental = '<C-space>',
+          scope_incremental = false,
+          node_decremental = '<bs>',
+        },
       },
       -- Autoinstall languages that are not installed
       auto_install = true,
@@ -982,7 +1002,7 @@ require('lazy').setup({
 
   {
     'RRethy/nvim-treesitter-endwise',
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    dependencies = { 'nvim-treesitter/nvim-treesitter', event = 'VeryLazy' },
   },
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
