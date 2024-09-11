@@ -71,6 +71,17 @@ vim.opt.splitbelow = true
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
+-- Go is a bit weird
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'go',
+  callback = function()
+    vim.opt_local.tabstop = 4
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.expandtab = false
+    vim.opt.listchars = { tab = '  ', trail = '·', nbsp = '␣' }
+  end,
+})
+
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
 
