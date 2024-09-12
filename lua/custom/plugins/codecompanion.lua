@@ -26,12 +26,22 @@ return {
           env = {
             api_key = 'cmd:pass open_ai',
           },
+          schema = {
+            model = {
+              default = 'gpt-4o-2024-08-06',
+            },
+          },
         })
       end,
       anthropic = function()
         return require('codecompanion.adapters').extend('anthropic', {
           env = {
             api_key = 'cmd:pass claude',
+          },
+          schema = {
+            model = {
+              default = 'claude-3-5-sonnet-20240620',
+            },
           },
         })
       end,
