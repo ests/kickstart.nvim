@@ -13,11 +13,11 @@ return {
   },
   event = 'VeryLazy',
   keys = {
-    { '<LocalLeader>ci', '<cmd>CodeCompanion<cr>', mode = { 'v', 'n' }, desc = 'Inline', noremap = true },
-    { '<LocalLeader>cc', '<cmd>CodeCompanionChat<cr>', mode = { 'v', 'n' }, desc = 'Chat', noremap = true },
-    { '<LocalLeader>ca', '<cmd>CodeCompanionActions<cr>', mode = { 'v', 'n' }, desc = 'Action Panel', noremap = true },
-    { '<LocalLeader>ct', '<cmd>CodeCompanionToggle<cr>', mode = { 'v', 'n' }, desc = 'Toggle Chat Window', noremap = true },
-    { '<LocalLeader>cd', '<cmd>CodeCompanionAdd<cr>', mode = { 'v', 'n' }, desc = 'Add Visual Selection', noremap = true },
+    { '<LocalLeader>ci', '<cmd>CodeCompanion<cr>', mode = { 'v', 'n' }, desc = '[I]nline Companion', noremap = true },
+    { '<LocalLeader>ch', '<cmd>CodeCompanionChat<cr>', mode = { 'v', 'n' }, desc = 'C[h]at', noremap = true },
+    { '<LocalLeader>cp', '<cmd>CodeCompanionActions<cr>', mode = { 'v', 'n' }, desc = 'Action [P]anel', noremap = true },
+    { '<LocalLeader>cg', '<cmd>CodeCompanionToggle<cr>', mode = { 'v', 'n' }, desc = 'To[g]gle Chat Window', noremap = true },
+    { '<LocalLeader>ca', '<cmd>CodeCompanionAdd<cr>', mode = { 'v', 'n' }, desc = '[A]dd Visual Selection', noremap = true },
   },
   opts = {
     adapters = {
@@ -50,5 +50,6 @@ return {
   config = function(_, opts)
     require('codecompanion').setup(opts)
     vim.cmd [[cab cc CodeCompanion]]
+    vim.cmd [[cab ccc CodeCompanionChat]]
   end,
 }
