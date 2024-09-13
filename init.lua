@@ -83,6 +83,7 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.shiftwidth = 4
     vim.opt_local.expandtab = false
     vim.opt.listchars = { tab = '  ', trail = '·', nbsp = '␣' }
+    vim.cmd 'iabbrev dl :='
   end,
 })
 
