@@ -71,6 +71,10 @@ vim.opt.splitbelow = true
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
+vim.opt_local.tabstop = 2
+vim.opt_local.shiftwidth = 2
+vim.opt_local.expandtab = true
+
 -- Go is a bit weird
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'go',
