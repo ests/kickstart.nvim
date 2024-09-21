@@ -11,15 +11,19 @@ return {
   },
   cmd = 'Neotree',
   keys = {
-    { '\\', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
+    { '<C-n>', ':Neotree toggle focus last left<CR>', desc = 'NeoTree show', silent = true },
   },
   opts = {
-    filesystem = {
-      window = {
-        mappings = {
-          ['\\'] = 'close_window',
-        },
-      },
+    source_selector = {
+      winbar = true,
+      statusline = false,
     },
+    -- filesystem = {
+    --   window = {
+    --     mappings = {
+    --       ['\\'] = 'close_window',
+    --     },
+    --   },
+    -- },
   },
 }

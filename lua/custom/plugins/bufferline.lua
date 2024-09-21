@@ -2,7 +2,7 @@
 return {
   'akinsho/bufferline.nvim',
   event = 'VeryLazy',
-  dependencies = 'nim-tree/nvim-web-devicons',
+  dependencies = 'nvim-tree/nvim-web-devicons',
   keys = {
     { '<tab>', '<cmd>BufferLineCycleNext<cr>' },
     { '<s-tab>', '<cmd>BufferLineCyclePrev<cr>' },
