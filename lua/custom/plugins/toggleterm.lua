@@ -15,5 +15,10 @@ return {
         end
       end,
     },
+    config = function(_, opts)
+      require('toggleterm').setup(opts)
+      vim.cmd [[cab tt ToggleTerm]]
+      vim.cmd [[cab tts ToggleTermSendVisualSelection]]
+    end,
   },
 }
