@@ -1,3 +1,4 @@
+local matchup = require 'custom.plugins.vim-matchup'
 --[[
 
 ▒██▀░▄▀▀░▀█▀░▄▀▀░░░█▄░█░█▒█░█░█▄▒▄█░░
@@ -940,6 +941,7 @@ require('lazy').setup({
     },
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
+      matchup = { enable = true },
       ensure_installed = {
         'bash',
         'c',
