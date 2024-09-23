@@ -940,7 +940,7 @@ require('lazy').setup({
     },
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      -- matchup = { enable = true },
+      matchup = { enable = true },
       ensure_installed = {
         'bash',
         'c',
