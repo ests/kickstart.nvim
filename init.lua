@@ -116,6 +116,9 @@ vim.o.relativenumber = true
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+-- copy current file with path
+vim.keymap.set('n', '<leader>fy', "<cmd>lua vim.fn.setreg('+', vim.fn.expand('%:p'))<CR>", { desc = 'Copy filename', noremap = true, silent = true })
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 vim.keymap.set('n', '<leader>i', function()
