@@ -866,25 +866,25 @@ require('lazy').setup({
       }
 
       -- additional cmp setups
-      cmp.setup.filetype('ruby', {
-        sources = cmp.config.sources({
-          { name = 'luasnip' },
-        }, { { name = 'nvim_lsp' } }, { { name = 'buffer' } }),
-      })
-
-      cmp.setup.filetype('gitcommit', {
-        sources = cmp.config.sources {
-          { name = 'buffer' }, -- You can specify the `cmp_git` source if you were installed it.
-        },
-      })
-
-      -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-      cmp.setup.cmdline({ '/', '?' }, {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          { name = 'buffer' },
-        },
-      })
+      -- cmp.setup.filetype('ruby', {
+      --   sources = cmp.config.sources({
+      --     { name = 'luasnip' },
+      --   }, { { name = 'nvim_lsp' } }, { { name = 'buffer' } }),
+      -- })
+      --
+      -- cmp.setup.filetype('gitcommit', {
+      --   sources = cmp.config.sources {
+      --     { name = 'buffer' }, -- You can specify the `cmp_git` source if you were installed it.
+      --   },
+      -- })
+      --
+      -- -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+      -- cmp.setup.cmdline({ '/', '?' }, {
+      --   mapping = cmp.mapping.preset.cmdline(),
+      --   sources = {
+      --     { name = 'buffer' },
+      --   },
+      -- })
     end,
   },
 
