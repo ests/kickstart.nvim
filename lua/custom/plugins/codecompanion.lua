@@ -20,6 +20,18 @@ return {
     { '<LocalLeader>ca', '<cmd>CodeCompanionChat Add<cr>', mode = { 'v', 'n' }, desc = '[A]dd Visual Selection', noremap = true },
   },
   opts = {
+    -- TODO: change all that to anthropic
+    strategies = {
+      chat = {
+        adapter = 'openai',
+      },
+      inline = {
+        adapter = 'openai',
+      },
+      agent = {
+        adapter = 'openai',
+      },
+    },
     adapters = {
       openai = function()
         return require('codecompanion.adapters').extend('openai', {
