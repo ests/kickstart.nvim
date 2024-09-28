@@ -13,11 +13,11 @@ return {
   },
   event = 'VeryLazy',
   keys = {
-    { '<LocalLeader>ci', '<cmd>CodeCompanion<cr>', mode = { 'v', 'n' }, desc = '[I]nline Companion', noremap = true },
-    { '<LocalLeader>ch', '<cmd>CodeCompanionChat<cr>', mode = { 'v', 'n' }, desc = 'C[h]at', noremap = true },
+    { '<LocalLeader>cc', '<cmd>CodeCompanion<cr>', mode = { 'v', 'n' }, desc = '[C]ode Companion', noremap = true },
+    { '<LocalLeader>ch', ':CodeCompanionChat', mode = { 'v', 'n' }, desc = 'C[h]at', noremap = true },
     { '<LocalLeader>cp', '<cmd>CodeCompanionActions<cr>', mode = { 'v', 'n' }, desc = 'Action [P]anel', noremap = true },
-    { '<LocalLeader>cg', '<cmd>CodeCompanionToggle<cr>', mode = { 'v', 'n' }, desc = 'To[g]gle Chat Window', noremap = true },
-    { '<LocalLeader>ca', '<cmd>CodeCompanionAdd<cr>', mode = { 'v', 'n' }, desc = '[A]dd Visual Selection', noremap = true },
+    { '<LocalLeader>cg', '<cmd>CodeCompanionChat Toggle<cr>', mode = { 'v', 'n' }, desc = 'To[g]gle Chat Window', noremap = true },
+    { '<LocalLeader>ca', '<cmd>CodeCompanionChat Add<cr>', mode = { 'v', 'n' }, desc = '[A]dd Visual Selection', noremap = true },
   },
   opts = {
     adapters = {
