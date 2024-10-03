@@ -11,7 +11,8 @@ return {
   },
   cmd = 'Neotree',
   keys = {
-    { '<C-n>', ':Neotree toggle focus last left<CR>', desc = 'NeoTree show', silent = true },
+    { '<C-n>', '<cmd>Neotree toggle focus last left<CR>', desc = 'NeoTree toggle', silent = true },
+    { '<localleader>n', '<cmd>Neotree focus reveal left<CR>', desc = 'NeoTree focus', silent = true },
   },
   opts = {
     source_selector = {
