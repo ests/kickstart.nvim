@@ -1,6 +1,26 @@
 return {
   'robitx/gp.nvim',
-  cmd = { 'GpGitCommit' },
+  keys = {
+    -- n
+    { '<localleader>cc', '<cmd>GpChatNew vsplit<cr>', mode = { 'n' }, desc = 'New chat vsplit', noremap = true, nowait = true },
+    { '<localleader>ca', '<cmd>GpAppend<cr>', mode = { 'n' }, desc = 'Append after', noremap = true, nowait = true },
+    { '<localleader>cb', '<cmd>GpPrepend<cr>', mode = { 'n' }, desc = 'Prepend before', noremap = true, nowait = true },
+    { '<localleader>cr', '<cmd>GpRewrite<cr>', mode = { 'n' }, desc = 'Rewrite', noremap = true, nowait = true },
+    { '<localleader>cn', '<cmd>GpNextAgent<cr>', mode = { 'n' }, desc = 'Next Agent', noremap = true, nowait = true },
+    { '<localleader>cs', '<cmd>GpStop<cr>', mode = { 'n' }, desc = 'Stop!', noremap = true, nowait = true },
+    { '<localleader>cm', '<cmd>GpGitCommit<cr>', mode = { 'n' }, desc = 'Git Commit', noremap = true, nowait = true },
+    { '<localleader>ct', '<cmd>GpChatToggle<cr>', mode = { 'n' }, desc = 'ChatToggle', noremap = true, nowait = true },
+    -- v
+    { '<localleader>cc', ":<C-u>'<,'>GpChatNew vsplit<cr>", mode = { 'v' }, desc = 'New chat vsplit', noremap = true, nowait = true },
+    { '<localleader>ca', ":<C-u>'<,'>GpAppend<cr>", mode = { 'v' }, desc = 'Append after', noremap = true, nowait = true },
+    { '<localleader>cb', ":<C-u>'<,'>GpPrepend<cr>", mode = { 'v' }, desc = 'Prepend before', noremap = true, nowait = true },
+    { '<localleader>cr', ":<C-u>'<,'>GpRewrite<cr>", mode = { 'v' }, desc = 'Rewrite', noremap = true, nowait = true },
+    { '<localleader>cn', '<cmd>GpNextAgent<cr>', mode = { 'v' }, desc = 'Next Agent', noremap = true, nowait = true },
+    { '<localleader>cs', '<cmd>GpStop<cr>', mode = { 'v' }, desc = 'Stop!', noremap = true, nowait = true },
+    { '<localleader>ct', ":<C-u>'<,'>GpChatToggle<cr>", mode = { 'v' }, desc = 'ChatToggle', noremap = true, nowait = true },
+    { '<localleader>cp', ":<C-u>'<,'>GpChatPaste<cr>", mode = { 'v' }, desc = 'Visual Chat paste', noremap = true, nowait = true },
+    { '<localleader>ci', ":<C-u>'<,'>GpImplement<cr>", mode = { 'v' }, desc = 'Implement Selection', noremap = true, nowait = true },
+  },
   config = function()
     local default_chat_system_prompt = [[
       I want you to act as an expert and senior developer in the commong programming languages and CS.
