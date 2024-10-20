@@ -1,5 +1,6 @@
 return {
   'robitx/gp.nvim',
+  cmd = { 'GpGitCommit' },
   config = function()
     local default_chat_system_prompt = [[
       I want you to act as an expert and senior developer in the commong programming languages and CS.
@@ -90,6 +91,7 @@ return {
       chat_assistant_prefix = { '🤖:', '[{{agent}}]' },
       chat_topic_gen_prompt = 'Summarize the topic of our conversation above' .. ' in two or three words. Respond only with those words.',
       command_prompt_prefix_template = '🤖 {{agent}} ~ ',
+      log_file = nil,
       -- example hook functions (see Extend functionality section in the README)
       hooks = {
         -- GpInspectPlugin provides a detailed inspection of the plugin state
@@ -106,35 +108,18 @@ return {
         -- end,
 
         GitCommit = function(gp, params)
-          local diff = vim.fn.system 'git diff --no-ext-diff --staged'
-          local template =
-            [[You are an expert at following the Conventional Commit specification. Given the git diff listed below, please generate a commit message for me:
-
-          ```diff
-          {{diff}}
-          ```
-          ]]
-          local agent = gp.get_command_agent()
-
-          gp.Prompt(
-            params,
-            gp.Target.rewrite,
-            agent,
-            template,
-            nil, -- command will run directly without any prompting for user input
-            nil -- no predefined instructions (e.g. speech-to-text from Whisper)
+          local diff = vim.fn.system 'git -c core.pager=cat diff --no-color --ignore-submodules --no-ext-diff --staged'
+          local template = vim.fn.printf(
+            [[You are an expert at following the Conventional Commit specification.
+            OUTPUT ONLY GIT COMMIT!
+            Given the git diff listed below, please generate a commit message for me:
+            ```diff
+            %s
+            ```]],
+            diff
           )
-        end,
-
-        -- GpInspectLog for checking the log file
-        InspectLog = function(plugin, params)
-          local log_file = plugin.config.log_file
-          local buffer = plugin.helpers.get_buffer(log_file)
-          if not buffer then
-            vim.cmd('e ' .. log_file)
-          else
-            vim.cmd('buffer ' .. buffer)
-          end
+          local agent = gp.get_command_agent()
+          gp.Prompt(params, gp.Target.prepend, agent, template)
         end,
 
         -- GpImplement rewrites the provided selection/range based on comments in it
@@ -145,7 +130,6 @@ return {
             .. '\n\nRespond exclusively with the snippet that should replace the selection above.'
 
           local agent = gp.get_command_agent()
-          gp.logger.info('Implementing selection with agent: ' .. agent.name)
 
           gp.Prompt(
             params,
