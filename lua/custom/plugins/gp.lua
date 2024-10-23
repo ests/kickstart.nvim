@@ -92,7 +92,7 @@ return {
           chat = true,
           command = false,
           -- string with model name or table with model name and parameters
-          model = { model = 'claude-3-5-sonnet-20240620', temperature = 0.8, top_p = 1 },
+          model = { model = 'claude-3-5-sonnet-20241022', temperature = 0.8, top_p = 1 },
           system_prompt = default_chat_system_prompt,
         },
         {
@@ -101,12 +101,12 @@ return {
           chat = false,
           command = true,
           -- string with model name or table with model name and parameters
-          model = { model = 'claude-3-5-sonnet-20240620', temperature = 0.8, top_p = 1 },
+          model = { model = 'claude-3-5-sonnet-20241022', temperature = 0.8, top_p = 1 },
           system_prompt = default_code_system_prompt,
         },
       },
-      default_command_agent = 'CodeGPT4o',
-      default_chat_agent = 'ChatGPT4o',
+      default_command_agent = 'ChatClaude-3-5-Sonnet',
+      default_chat_agent = 'ChatClaude-3-5-Sonnet',
       chat_user_prefix = '💬:',
       chat_assistant_prefix = { '🤖:', '[{{agent}}]' },
       chat_topic_gen_prompt = 'Summarize the topic of our conversation above' .. ' in two or three words. Respond only with those words.',
