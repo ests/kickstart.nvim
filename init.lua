@@ -705,6 +705,7 @@ require('lazy').setup({
       --  into multiple repos for maintenance purposes.
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+      'hrsh7th/cmp-buffer',
     },
     config = function()
       -- See `:help cmp`
@@ -750,6 +751,10 @@ require('lazy').setup({
         -- performance = {
         --   debounce = 180,
         --   throttle = 60,
+        --   fetching_timeout = 300,
+        --   confirm_resolve_timeout = 400,
+        --   async_budget = 90,
+        --   max_view_entries = 20,
         -- },
         preselect = cmp.PreselectMode.None,
         matching = {
@@ -867,11 +872,11 @@ require('lazy').setup({
       }
 
       -- additional cmp setups
-      -- cmp.setup.filetype('ruby', {
-      --   sources = cmp.config.sources({
-      --     { name = 'luasnip' },
-      --   }, { { name = 'nvim_lsp' } }, { { name = 'buffer' } }),
-      -- })
+      cmp.setup.filetype('ruby', {
+        sources = cmp.config.sources({
+          { name = 'luasnip' },
+        }, { { name = 'nvim_lsp' } }, { { name = 'buffer' } }),
+      })
       --
       -- cmp.setup.filetype('gitcommit', {
       --   sources = cmp.config.sources {
@@ -994,7 +999,7 @@ require('lazy').setup({
         --  the list of additional_vim_regex_highlighting and disabled languages for indent.
         additional_vim_regex_highlighting = {},
       },
-      indent = { enable = true, disable = {} },
+      indent = { enable = true, disable = { 'ruby' } },
       endwise = {
         enabled = true,
       },
@@ -1005,6 +1010,11 @@ require('lazy').setup({
     --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
     --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+  },
+
+  {
+    'nvim-treesitter/nvim-treesitter-context',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', event = 'VeryLazy' },
   },
 
   {
@@ -1103,11 +1113,11 @@ keymap('v', 'J', ":m '>+1<CR>gv=gv", { noremap = true })
 keymap('v', '<', '<gv', { noremap = true, silent = true })
 keymap('v', '>', '>gv', { noremap = true, silent = true })
 
--- ruby hacks
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'ruby',
-  command = 'setlocal indentkeys-=.',
-})
+-- -- ruby hacks
+-- vim.api.nvim_create_autocmd('FileType', {
+--   pattern = 'ruby',
+--   command = 'setlocal indentkeys-=.',
+-- })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
