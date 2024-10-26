@@ -60,8 +60,8 @@ return {
       diagnostics = 'nvim_lsp',
       hover = {
         enabled = true,
-        delay = 20,
-        hover = { 'close' },
+        delay = 200,
+        reveal = { 'close' },
       },
       offsets = {
         {
@@ -71,12 +71,12 @@ return {
           text_align = 'left',
         },
       },
-      separator_style = 'slant',
+      separator_style = 'thick',
       numbers = function(opts)
         return string.format('%s|%s', opts.id, opts.raise(opts.ordinal))
       end,
       sort_by = 'inser_after_current',
-      diagnostics_indicator = function(count, level, diagnostics_dict, context)
+      diagnostics_indicator = function(_, _, diagnostics_dict, _)
         local s = ' '
         for e, n in pairs(diagnostics_dict) do
           local sym = e == 'error' and ' ' or (e == 'warning' and ' ' or '')
