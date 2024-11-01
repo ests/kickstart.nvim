@@ -87,8 +87,7 @@ return {
           name = 'ChatClaude-3-5-Sonnet',
           chat = true,
           command = false,
-          -- string with model name or table with model name and parameters
-          model = { model = 'claude-3-5-sonnet-20241022', temperature = 0.8, top_p = 1 },
+          model = { model = 'claude-3-5-sonnet-20241022', temperature = 1, top_p = 1 },
           system_prompt = default_chat_system_prompt,
         },
         {
@@ -96,7 +95,6 @@ return {
           name = 'CodeClaude-3-5-Sonnet',
           chat = false,
           command = true,
-          -- string with model name or table with model name and parameters
           model = { model = 'claude-3-5-sonnet-20241022', temperature = 0.8, top_p = 1 },
           system_prompt = default_code_system_prompt,
         },
@@ -142,7 +140,8 @@ return {
         Implement = function(gp, params)
           local template = 'Having following from {{filename}}:\n\n'
             .. '```{{filetype}}\n{{selection}}\n```\n\n'
-            .. 'Please rewrite this according to the contained instructions.'
+            .. 'Please rewrite this according to the contained instructions.\n'
+            .. 'Focus primarly on instructions in TODO comments.'
             .. '\n\nRespond exclusively with the snippet that should replace the selection above.'
 
           local agent = gp.get_command_agent()
@@ -157,43 +156,23 @@ return {
           )
         end,
 
-        -- your own functions can go here, see README for more examples like
-        -- :GpExplain, :GpUnitTests.., :GpTranslator etc.
+        -- example of adding command which writes unit tests for the selected code
+        UnitTests = function(gp, params)
+          local template = 'I have the following code from {{filename}}:\n\n'
+            .. '```{{filetype}}\n{{selection}}\n```\n\n'
+            .. 'Please respond by writing table driven unit tests for the code above.'
+          local agent = gp.get_command_agent()
+          gp.Prompt(params, gp.Target.enew, agent, template)
+        end,
 
-        -- -- example of making :%GpChatNew a dedicated command which
-        -- -- opens new chat with the entire current buffer as a context
-        -- BufferChatNew = function(gp, _)
-        -- 	-- call GpChatNew command in range mode on whole buffer
-        -- 	vim.api.nvim_command("%" .. gp.config.cmd_prefix .. "ChatNew")
-        -- end,
-
-        -- -- example of adding command which opens new chat dedicated for translation
-        -- Translator = function(gp, params)
-        -- 	local chat_system_prompt = "You are a Translator, please translate between English and Chinese."
-        -- 	gp.cmd.ChatNew(params, chat_system_prompt)
-        --
-        -- 	-- -- you can also create a chat with a specific fixed agent like this:
-        -- 	-- local agent = gp.get_chat_agent("ChatGPT4o")
-        -- 	-- gp.cmd.ChatNew(params, chat_system_prompt, agent)
-        -- end,
-
-        -- -- example of adding command which writes unit tests for the selected code
-        -- UnitTests = function(gp, params)
-        -- 	local template = "I have the following code from {{filename}}:\n\n"
-        -- 		.. "```{{filetype}}\n{{selection}}\n```\n\n"
-        -- 		.. "Please respond by writing table driven unit tests for the code above."
-        -- 	local agent = gp.get_command_agent()
-        -- 	gp.Prompt(params, gp.Target.enew, agent, template)
-        -- end,
-
-        -- -- example of adding command which explains the selected code
-        -- Explain = function(gp, params)
-        -- 	local template = "I have the following code from {{filename}}:\n\n"
-        -- 		.. "```{{filetype}}\n{{selection}}\n```\n\n"
-        -- 		.. "Please respond by explaining the code above."
-        -- 	local agent = gp.get_chat_agent()
-        -- 	gp.Prompt(params, gp.Target.popup, agent, template)
-        -- end,
+        -- example of adding command which explains the selected code
+        Explain = function(gp, params)
+          local template = 'I have the following code from {{filename}}:\n\n'
+            .. '```{{filetype}}\n{{selection}}\n```\n\n'
+            .. 'Please respond by explaining the code above.'
+          local agent = gp.get_chat_agent()
+          gp.Prompt(params, gp.Target.popup, agent, template)
+        end,
       },
     }
 
