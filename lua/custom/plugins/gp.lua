@@ -1,8 +1,11 @@
 return {
   'robitx/gp.nvim',
+  event = 'VeryLazy',
   keys = {
     -- n
-    { '<localleader>cc', '<cmd>GpChatNew vsplit<cr>', mode = { 'n' }, desc = 'New chat vsplit', noremap = true, nowait = true },
+    { '<localleader>cv', '<cmd>GpChatNew vsplit<cr>', mode = { 'n' }, desc = 'New chat vsplit', noremap = true, nowait = true },
+    { '<localleader>co', '<cmd>GpChatNew popup<cr>', mode = { 'n' }, desc = 'New chat popup', noremap = true, nowait = true },
+    { '<localleader>cs', '<cmd>GpChatNew split<cr>', mode = { 'n' }, desc = 'New chat split', noremap = true, nowait = true },
     { '<localleader>ca', '<cmd>GpAppend<cr>', mode = { 'n' }, desc = 'Append after', noremap = true, nowait = true },
     { '<localleader>cb', '<cmd>GpPrepend<cr>', mode = { 'n' }, desc = 'Prepend before', noremap = true, nowait = true },
     { '<localleader>cr', '<cmd>GpRewrite<cr>', mode = { 'n' }, desc = 'Rewrite', noremap = true, nowait = true },
@@ -11,7 +14,9 @@ return {
     { '<localleader>cm', '<cmd>GpGitCommit<cr>', mode = { 'n' }, desc = 'Git Commit', noremap = true, nowait = true },
     { '<localleader>ct', '<cmd>GpChatToggle<cr>', mode = { 'n' }, desc = 'ChatToggle', noremap = true, nowait = true },
     -- v
-    { '<localleader>cc', ":<C-u>'<,'>GpChatNew vsplit<cr>", mode = { 'v' }, desc = 'New chat vsplit', noremap = true, nowait = true },
+    { '<localleader>cv', ":<C-u>'<,'>GpChatNew vsplit<cr>", mode = { 'v' }, desc = 'New chat vsplit', noremap = true, nowait = true },
+    { '<localleader>co', ":<C-u>'<,'>GpChatNew popup<cr>", mode = { 'n' }, desc = 'New chat popup', noremap = true, nowait = true },
+    { '<localleader>cs', ":<C-u>'<,'>GpChatNew split<cr>", mode = { 'n' }, desc = 'New chat split', noremap = true, nowait = true },
     { '<localleader>ca', ":<C-u>'<,'>GpAppend<cr>", mode = { 'v' }, desc = 'Append after', noremap = true, nowait = true },
     { '<localleader>cb', ":<C-u>'<,'>GpPrepend<cr>", mode = { 'v' }, desc = 'Prepend before', noremap = true, nowait = true },
     { '<localleader>cr', ":<C-u>'<,'>GpRewrite<cr>", mode = { 'v' }, desc = 'Rewrite', noremap = true, nowait = true },
@@ -46,10 +51,6 @@ return {
       },
       agents = {
         {
-          name = 'ChatGPT3-5',
-          disable = true,
-        },
-        {
           provider = 'openai',
           name = 'ChatGPT4o',
           chat = true,
@@ -80,11 +81,6 @@ return {
           command = true,
           model = { model = 'gpt-4o-mini', temperature = 0.8, top_p = 1 },
           system_prompt = default_code_system_prompt,
-        },
-        {
-          provider = 'anthropic',
-          name = 'CodeClaude-3-Haiku',
-          disable = true,
         },
         {
           provider = 'anthropic',
