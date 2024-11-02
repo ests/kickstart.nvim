@@ -28,13 +28,23 @@ return {
   },
   config = function()
     local default_chat_system_prompt = [[
-      I want you to act as an expert and senior developer in the commong programming languages and CS.
-      I will ask you questions, perhaps giving you code examples, and I want you to advise me with explanations and code where neccessary.
+      You are an expert and senior developer with extensive knowledge of common programming languages and computer science concepts.
+      Your task is to provide accurate, concise, and high-quality coding assistance to users who present you with questions or code snippets.
+
+      Focus on generating clean, efficient, and bug-free code that directly addresses the user's needs.
+      Minimize explanatory text and avoid unnecessary code comments.
+
+      When providing your response:
+      1. Ensure the code is free of bugs and meets high coding standards.
+      2. Verify that the code accomplishes what the user initially asked for.
+      3. Provide brief, essential explanations only when absolutely necessary.
+
+      Provide more detailed and explanatory answers only if user asked you to do that.
     ]]
 
     local default_code_system_prompt = 'You are an AI working as a code editor.\n\n'
-      .. 'Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n'
-      .. 'START AND END YOUR ANSWER WITH:\n\n```'
+      .. 'As code editor you do not generate any COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n'
+      .. 'START AND END YOUR ANSWER ONLY WITH:\n\n```'
 
     local config = {
       providers = {
@@ -106,21 +116,7 @@ return {
       chat_topic_gen_prompt = 'Summarize the topic of our conversation above' .. ' in two or three words. Respond only with those words.',
       command_prompt_prefix_template = '🤖 {{agent}} ~ ',
       log_file = nil,
-      -- example hook functions (see Extend functionality section in the README)
       hooks = {
-        -- GpInspectPlugin provides a detailed inspection of the plugin state
-        -- InspectPlugin = function(plugin, params)
-        --   local bufnr = vim.api.nvim_create_buf(false, true)
-        --   local copy = vim.deepcopy(plugin)
-        --   local key = copy.config.openai_api_key or ''
-        --   copy.config.openai_api_key = key:sub(1, 3) .. string.rep('*', #key - 6) .. key:sub(-3)
-        --   local plugin_info = string.format('Plugin structure:\n%s', vim.inspect(copy))
-        --   local params_info = string.format('Command params:\n%s', vim.inspect(params))
-        --   local lines = vim.split(plugin_info .. '\n' .. params_info, '\n')
-        --   vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
-        --   vim.api.nvim_win_set_buf(0, bufnr)
-        -- end,
-
         GitCommit = function(gp, params)
           local diff = vim.fn.system 'git -c core.pager=cat diff --no-color --ignore-submodules --no-ext-diff --staged'
           local template = vim.fn.printf(
@@ -141,7 +137,7 @@ return {
           local template = 'Having following from {{filename}}:\n\n'
             .. '```{{filetype}}\n{{selection}}\n```\n\n'
             .. 'Please rewrite this according to the contained instructions.\n'
-            .. 'Focus primarly on instructions in TODO comments.'
+            .. 'Detect programming language if not specified. Focus primarly on instructions in TODO comments.'
             .. '\n\nRespond exclusively with the snippet that should replace the selection above.'
 
           local agent = gp.get_command_agent()
@@ -160,7 +156,7 @@ return {
         UnitTests = function(gp, params)
           local template = 'I have the following code from {{filename}}:\n\n'
             .. '```{{filetype}}\n{{selection}}\n```\n\n'
-            .. 'Please respond by writing table driven unit tests for the code above.'
+            .. 'Please respond by writing unit tests for the code above.'
           local agent = gp.get_command_agent()
           gp.Prompt(params, gp.Target.enew, agent, template)
         end,
