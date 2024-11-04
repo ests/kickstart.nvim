@@ -6,6 +6,8 @@ return {
       options = {
         theme = 'catppuccin',
         ignore_focus = { 'neo-tree', 'alpha' },
+        component_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
       },
       sections = {
         lualine_a = {
@@ -16,7 +18,26 @@ return {
             end,
           },
         },
-        lualine_b = {},
+        lualine_b = {
+          {
+            'branch',
+            icon = '',
+            color = { gui = 'bold' },
+          },
+          'diff',
+          'diagnostics',
+        },
+        lualine_c = {
+          {
+            'filename',
+            path = 4,
+            symbols = { modified = '', readonly = '', unnamed = '[no name]', newfile = '' },
+          },
+        },
+
+        lualine_x = { 'filetype' },
+        lualine_y = { 'progress' },
+        lualine_z = { 'location' },
       },
     }
   end,
