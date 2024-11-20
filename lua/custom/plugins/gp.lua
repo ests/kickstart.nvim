@@ -147,7 +147,7 @@ return {
             ```]],
             diff
           )
-          local agent = gp.get_command_agent()
+          local agent = gp.get_command_agent 'ChatGPT4mini'
           gp.Prompt(params, gp.Target.prepend, agent, template)
         end,
 
