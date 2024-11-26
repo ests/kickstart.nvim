@@ -87,6 +87,14 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
+-- But Ruby is no better
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'ruby',
+  callback = function()
+    vim.opt_local.indentkeys:remove '.'
+  end,
+})
+
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
 
