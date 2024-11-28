@@ -1010,12 +1010,13 @@ require('lazy').setup({
         -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
         --  If you are experiencing weird indenting issues, add the language to
         --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-        additional_vim_regex_highlighting = {},
+        -- additional_vim_regex_highlighting = { 'ruby' },
+        additional_vim_regex_highlighting = 'ruby',
       },
-      indent = { enable = true, disable = {} },
-      -- endwise = {
-      --   enabled = true,
-      -- },
+      indent = { enable = true, disable = { 'ruby' } },
+      endwise = {
+        enabled = true,
+      },
     },
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:
@@ -1030,10 +1031,10 @@ require('lazy').setup({
     dependencies = { 'nvim-treesitter/nvim-treesitter', event = 'VeryLazy' },
   },
 
-  -- {
-  --   'RRethy/nvim-treesitter-endwise',
-  --   dependencies = { 'nvim-treesitter/nvim-treesitter', event = 'VeryLazy' },
-  -- },
+  {
+    'RRethy/nvim-treesitter-endwise',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', event = 'VeryLazy' },
+  },
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
@@ -1125,12 +1126,6 @@ keymap('v', 'J', ":m '>+1<CR>gv=gv", { noremap = true })
 -- visual indent
 keymap('v', '<', '<gv', { noremap = true, silent = true })
 keymap('v', '>', '>gv', { noremap = true, silent = true })
-
--- -- ruby hacks
--- vim.api.nvim_create_autocmd('FileType', {
---   pattern = 'ruby',
---   command = 'setlocal indentkeys-=.',
--- })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
