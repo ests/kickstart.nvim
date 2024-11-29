@@ -22,17 +22,17 @@ local fmta = require('luasnip.extras.fmt').fmta
 return {
   s({ trig = 'fsl', name = '# frozen string literal' }, t { '# frozen_string_literal: true' }),
 
-  s({ trig = 'ib', name = 'inline block' }, fmta('{ |<>| <> }', { i(1), i(2) })),
+  s({ trig = 'ib', name = 'inline block' }, fmta('{ |<>| <> }', { i(1), i(0) })),
 
   s(
     { trig = 'do', name = 'do block' },
     fmta(
       [[
-      do
+      do |<>|
         <>
       end
       ]],
-      { i(0) }
+      { i(1), i(0) }
       -- { c(1, { sn(nil, { t ' |', i(1, 'el'), t '|' }), t '' }), i(2) }
     )
   ),
