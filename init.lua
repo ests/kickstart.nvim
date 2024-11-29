@@ -698,24 +698,19 @@ require('lazy').setup({
       local cmp = require 'cmp'
       local cmp_window = require 'cmp.config.window'
       local luasnip = require 'luasnip'
-      local has_words_before = function()
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
-      end
 
       require('luasnip.loaders.from_lua').lazy_load {
         paths = { '~/.config/nvim/LuaSnip' },
       }
 
-      local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
-      cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
-
       luasnip.config.setup {
-        history = false,
         -- store_selection_keys = "<Tab>",
         enable_autosnippets = false,
         delete_check_events = 'TextChanged,InsertLeave',
-        region_check_event = 'InsertEnter',
+        region_check_event = 'InsertEnter,CursorMoved,CursorHold',
+        link_children = false,
+        link_roots = false,
+        keep_roots = false,
       }
 
       vim.api.nvim_set_hl(0, 'CmpGhostText', { link = 'Comment', default = true })
@@ -728,7 +723,7 @@ require('lazy').setup({
         },
         completion = {
           keyword_length = 2,
-          completeopt = 'menu,menuone,noinsert',
+          completeopt = 'menu,menuone,noselect',
         },
         window = {
           completion = cmp_window.bordered(),
@@ -779,10 +774,10 @@ require('lazy').setup({
               end
             end,
           },
-          ['<CR>'] = cmp.mapping.confirm {
-            behavior = cmp.ConfirmBehavior.Insert,
-            select = false,
-          },
+          -- ['<CR>'] = cmp.mapping.confirm {
+          --   behavior = cmp.ConfirmBehavior.Insert,
+          --   select = false,
+          -- },
           ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert }, { 'i', 'c' })
@@ -790,8 +785,6 @@ require('lazy').setup({
               luasnip.jump(1)
             elseif luasnip.expand_or_locally_jumpable() then
               luasnip.expand_or_jump()
-            elseif has_words_before() then
-              cmp.complete()
             else
               fallback()
             end
@@ -809,9 +802,9 @@ require('lazy').setup({
 
           -- If you prefer more traditional completion keymaps,
           -- you can uncomment the following lines
-          --['<CR>'] = cmp.mapping.confirm { select = true },
-          --['<Tab>'] = cmp.mapping.select_next_item(),
-          --['<S-Tab>'] = cmp.mapping.select_prev_item(),
+          -- ['<CR>'] = cmp.mapping.confirm { select = true },
+          -- ['<Tab>'] = cmp.mapping.select_next_item(),
+          -- ['<S-Tab>'] = cmp.mapping.select_prev_item(),
 
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
@@ -826,16 +819,16 @@ require('lazy').setup({
           --
           -- <c-l> will move you to the right of each of the expansion locations.
           -- <c-h> is similar, except moving you backwards.
-          ['<C-l>'] = cmp.mapping(function()
-            if luasnip.expand_or_locally_jumpable() then
-              luasnip.expand_or_jump()
-            end
-          end, { 'i', 's' }),
-          ['<C-h>'] = cmp.mapping(function()
-            if luasnip.locally_jumpable(-1) then
-              luasnip.jump(-1)
-            end
-          end, { 'i', 's' }),
+          -- ['<C-l>'] = cmp.mapping(function()
+          --   if luasnip.expand_or_locally_jumpable() then
+          --     luasnip.expand_or_jump()
+          --   end
+          -- end, { 'i', 's' }),
+          -- ['<C-h>'] = cmp.mapping(function()
+          --   if luasnip.locally_or_locally_jumpable(-1) then
+          --     luasnip.jump(-1)
+          --   end
+          -- end, { 'i', 's' }),
 
           -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
           --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
