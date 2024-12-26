@@ -32,6 +32,8 @@ vim.opt.mouse = 'a'
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
 
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect', 'noinsert', 'popup' }
+
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
@@ -726,11 +728,15 @@ require('lazy').setup({
         },
         completion = {
           keyword_length = 2,
-          completeopt = 'menu,menuone,noselect',
+          completeopt = 'menu,menuone,noselect,noinsert,popup',
         },
         window = {
-          completion = cmp_window.bordered(),
-          documentation = cmp_window.bordered(),
+          completion = cmp_window.bordered {
+            border = 'rounded',
+          },
+          documentation = cmp_window.bordered {
+            border = 'rounded',
+          },
         },
         -- performance = {
         --   debounce = 180,
