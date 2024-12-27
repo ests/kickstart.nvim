@@ -3,12 +3,30 @@ return {
     'CopilotC-Nvim/CopilotChat.nvim',
     dependencies = {
       { 'zbirenbaum/copilot.lua' },
-      { 'nvim-lua/plenary.nvim', branch = 'master' }, -- for curl, log and async functions
+      { 'nvim-lua/plenary.nvim', branch = 'master' },
     },
-    build = 'make tiktoken', -- Only on MacOS or Linux
+    build = 'make tiktoken',
     opts = {
-      -- See Configuration section for options
+      model = 'gpt-4',
     },
-    -- See Commands section for default commands if you want to lazy load on them
+    cmd = { 'CopilotChat' },
+    keys = {
+      { '<leader>aa', '<cmd>CopilotChatToggle<cr>', mode = { 'n', 'v' }, noremap = true, silent = true, desc = 'Toggle Copilot Chat' },
+      { '<leader>ae', '<cmd>CopilotChatExplain<cr>', mode = { 'n', 'v' }, noremap = true, silent = true, desc = 'Explain code' },
+      { '<leader>af', '<cmd>CopilotChatFix<cr>', mode = { 'n', 'v' }, noremap = true, silent = true, desc = 'Fix code' },
+      { '<leader>ar', '<cmd>CopilotChatReview<cr>', mode = { 'n', 'v' }, noremap = true, silent = true, desc = 'Review code' },
+      { '<leader>ad', '<cmd>CopilotChatDocs<cr>', mode = { 'n', 'v' }, noremap = true, silent = true, desc = 'Generate documentation' },
+      { '<leader>ac', '<cmd>CopilotChatCommit<cr>', mode = { 'n', 'v' }, noremap = true, silent = true, desc = 'Generate commit message' },
+      {
+        '<leader>ao',
+        '<cmd>CopilotChatOptimize<cr>',
+        mode = { 'n', 'v' },
+        noremap = true,
+        nowait = true,
+        silent = true,
+        desc = 'Optimize performance and readability',
+      },
+      { '<leader>at', '<cmd>CopilotChatTests<cr>', mode = { 'n', 'v' }, noremap = true, silent = true, desc = 'Add tests' },
+    },
   },
 }
