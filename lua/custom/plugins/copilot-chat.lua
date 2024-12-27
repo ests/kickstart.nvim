@@ -8,6 +8,9 @@ return {
     build = 'make tiktoken',
     opts = {
       model = 'gpt-4',
+      window = {
+        -- width = 0.45,
+      },
     },
     cmd = { 'CopilotChat' },
     keys = {
