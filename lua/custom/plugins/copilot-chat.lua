@@ -7,7 +7,11 @@ return {
     },
     build = 'make tiktoken',
     opts = {
-      model = 'gpt-4',
+      highlight_headers = false,
+      separator = '---',
+      error_header = '> [!ERROR] Error',
+      -- model = 'gpt-4',
+      model = 'claude-3.5-sonnet',
       window = {
         -- width = 0.45,
       },
