@@ -34,13 +34,12 @@ vim.opt.showmode = false
 
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect', 'noinsert', 'popup' }
 
--- Sync clipboard between OS and Neovim.
---  Schedule the setting after `UiEnter` because it can increase startup-time.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
--- vim.schedule(function()
---   vim.opt.clipboard = 'unnamedplus'
--- end)
+-- Use system clipboard for copy/yank operations, but don't override it when pasting
+vim.opt.clipboard:append 'unnamed' -- use * register
+-- vim.opt.clipboard:append('unnamedplus') -- use + register (not needed on macOS as * and + are the same)
+
+-- Preserve clipboard when pasting in visual mode
+vim.keymap.set('x', 'p', '"_dP')
 
 -- views can only be fully collapsed with the global statusline
 vim.opt.laststatus = 3

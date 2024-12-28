@@ -8,4 +8,5 @@ return {
   opts = {
     file_types = { 'markdown', 'copilot-chat', 'vimwiki' },
   },
+  event = 'VeryLazy',
 }
