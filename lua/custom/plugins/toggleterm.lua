@@ -11,7 +11,7 @@ return {
       'ToggleTermSendCurrentLine',
     },
     keys = {
-      { '<C-\\>', '<cmd>ToggleTerm<CR>' },
+      { '<leader>tt', '<cmd>ToggleTerm<CR>', desc = '[T]oggle [T]erm' },
     },
     opts = {
       size = function(term)
