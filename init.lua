@@ -1008,6 +1008,21 @@ require('lazy').setup({
   {
     'nvim-treesitter/nvim-treesitter-context',
     dependencies = { 'nvim-treesitter/nvim-treesitter', event = 'VeryLazy' },
+    opts = {
+      enable = true,
+      multiwindow = false,
+      max_lines = 5, -- How many lines the window should span. Values <= 0 mean no limit.
+      min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+      line_numbers = true,
+      multiline_threshold = 5, -- Maximum number of lines to show for a single context
+      trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+      mode = 'cursor', -- Line used to calculate context. Choices: 'cursor', 'topline'
+      -- Separator between context and content. Should be a single character string, like '-'.
+      -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+      -- separator = nil,
+      -- zindex = 20, -- The Z-index of the context window
+      -- on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
+    },
   },
 
   {
@@ -1091,10 +1106,10 @@ end
 keymap('n', '<c-x>', '', { noremap = true, silent = true, callback = save_all_and_quit })
 
 -- movement
-keymap('n', '<c-h>', '<c-w>h', { noremap = true, silent = true })
-keymap('n', '<c-j>', '<c-w>j', { noremap = true, silent = true })
-keymap('n', '<c-k>', '<c-w>k', { noremap = true, silent = true })
-keymap('n', '<c-l>', '<c-w>l', { noremap = true, silent = true })
+keymap({ 'n', 'v' }, '<c-h>', '<c-w>h', { noremap = true, silent = true })
+keymap({ 'n', 'v' }, '<c-j>', '<c-w>j', { noremap = true, silent = true })
+keymap({ 'n', 'v' }, '<c-k>', '<c-w>k', { noremap = true, silent = true })
+keymap({ 'n', 'v' }, '<c-l>', '<c-w>l', { noremap = true, silent = true })
 
 -- toggle last buffers
 keymap('n', ',,', '<cmd>b#<cr>', { noremap = true, silent = true })
@@ -1105,6 +1120,11 @@ keymap('v', 'J', ":m '>+1<CR>gv=gv", { noremap = true })
 -- visual indent
 keymap('v', '<', '<gv', { noremap = true, silent = true })
 keymap('v', '>', '>gv', { noremap = true, silent = true })
+
+-- global abbrevs
+vim.cmd [[iab <expr> dti strftime("%Y-%m-%d")]]
+vim.cmd [[iab <expr> dtl strftime("%y.%m.%d")]]
+vim.cmd [[iab <expr> dts strftime("%m/%d")]]
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
