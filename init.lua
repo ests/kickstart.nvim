@@ -1124,7 +1124,7 @@ keymap('v', '>', '>gv', { noremap = true, silent = true })
 -- global abbrevs
 vim.cmd [[iab <expr> dti strftime("%Y-%m-%d")]]
 vim.cmd [[iab <expr> dtl strftime("%y.%m.%d")]]
-vim.cmd [[iab <expr> dts strftime("%m/%d")]]
+vim.cmd [[iab <expr> dts strftime("%m.%d")]]
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
