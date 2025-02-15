@@ -25,12 +25,12 @@ return {
         hide_during_completion = true,
         debounce = 100,
         keymap = {
-          accept = '<C-y>',
-          accept_word = false,
-          accept_line = false,
-          next = '<C-n>',
-          prev = '<C-p>',
-          dismiss = '<C-e>',
+          accept = false,
+          accept_word = '<M-Right>',
+          accept_line = '<M-Down>',
+          prev = '<M-[>',
+          next = '<M-]>',
+          dismiss = '<C-]>',
         },
       },
       filetypes = {
@@ -47,5 +47,15 @@ return {
       copilot_node_command = 'node', -- Node.js version must be > 18.x
       server_opts_overrides = {},
     }
+
+    local suggestion = require 'copilot.suggestion'
+
+    vim.keymap.set('i', '<C-n>', function()
+      if suggestion.is_visible() then
+        suggestion.accept()
+      else
+        suggestion.next()
+      end
+    end, { desc = '[copilot] accept or next suggestion' })
   end,
 }
