@@ -128,8 +128,14 @@ vim.o.relativenumber = true
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+-- Visual line select last yanked/changed text
+vim.keymap.set('n', '<leader>vy', '`[V`]', { desc = 'Visual Line Select Last Changed Text' })
+
+-- Visual line select, format, and return to normal mode
+vim.keymap.set('n', '<leader>fy', '`[V`]=`[', { desc = 'Format Last Changed Text' })
+
 -- copy current file with path
-vim.keymap.set('n', '<leader>fy', "<cmd>lua vim.fn.setreg('+', vim.fn.expand('%:p'))<CR>", { desc = 'Copy filename', noremap = true, silent = true })
+vim.keymap.set('n', '<leader>yf', "<cmd>lua vim.fn.setreg('+', vim.fn.expand('%:p'))<CR>", { desc = 'Copy filename', noremap = true, silent = true })
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -1105,6 +1111,7 @@ keymap('v', '>', '>gv', { noremap = true, silent = true })
 vim.cmd [[iab <expr> dti strftime("%Y-%m-%d")]]
 vim.cmd [[iab <expr> dtl strftime("%y.%m.%d")]]
 vim.cmd [[iab <expr> dts strftime("%m.%d")]]
+keymap('v', '>', '>gv', { noremap = true, silent = true })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
