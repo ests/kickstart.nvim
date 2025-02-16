@@ -1111,7 +1111,6 @@ keymap('v', '>', '>gv', { noremap = true, silent = true })
 vim.cmd [[iab <expr> dti strftime("%Y-%m-%d")]]
 vim.cmd [[iab <expr> dtl strftime("%y.%m.%d")]]
 vim.cmd [[iab <expr> dts strftime("%m.%d")]]
-keymap('v', '>', '>gv', { noremap = true, silent = true })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
