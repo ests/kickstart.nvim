@@ -1072,6 +1072,7 @@ keymap('n', 'Q', '<Nop>', { noremap = true, silent = true })
 keymap('n', 'q', '<Nop>', { noremap = true, silent = true })
 keymap('n', '*', '*<c-o>', { noremap = true, silent = true })
 keymap('n', '<leader>x', '<cmd>Bdelete<cr>', { noremap = true, silent = true })
+keymap('n', '<leader>X', '<cmd>bdelete<cr>', { noremap = true, silent = true })
 
 -- save all quit
 local function save_all_and_quit()
