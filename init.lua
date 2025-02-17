@@ -793,7 +793,7 @@ require('lazy').setup({
 
         -- mapping = cmp.mapping.preset.insert {
         mapping = {
-          ['<Esc>'] = cmp.mapping.abort(),
+          ['<C-e>'] = cmp.mapping.abort(),
           -- Scroll the documentation window [b]ack / [f]orward
           ['<C-d>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -810,19 +810,13 @@ require('lazy').setup({
             else
               fallback()
             end
-          end, {
-            'i',
-            's',
-          }),
+          end, { 'i', 's' }),
           ['<S-Tab>'] = cmp.mapping(function()
             if cmp.visible() then
               cmp.select_prev_item { behavior = cmp.SelectBehavior.Insert }
             end
-          end, {
-            'i',
-            's',
-          }),
-          ['<CR>'] = cmp.mapping(cmp.mapping.confirm { select = true }, { 'i', 'c' }),
+          end, { 'i', 's' }),
+          ['<CR>'] = cmp.mapping(cmp.mapping.confirm { select = false }, { 'i', 'c' }),
 
           -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
           --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
