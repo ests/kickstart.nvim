@@ -5,11 +5,11 @@ return {
     -- See `:help ibl`
     main = 'ibl',
     opts = {
-      debounce = 100,
+      debounce = 150,
       indent = {
         smart_indent_cap = true,
         priority = 2,
-        highlight = { 'LineNr' },
+        -- highlight = { 'LineNr' },
         char = '│',
       },
       scope = { show_start = false, show_end = false },

@@ -4,7 +4,7 @@ return {
   config = function()
     require('lualine').setup {
       options = {
-        theme = 'catppuccin',
+        theme = 'kanagawa',
         ignore_focus = { 'neo-tree', 'alpha' },
         component_separators = { left = '', right = '' },
         section_separators = { left = '', right = '' },
