@@ -117,7 +117,7 @@ vim.opt.backupdir = '/tmp/vim/backup'
 vim.opt.undofile = true
 vim.opt.undodir = '/tmp/vim/undo'
 vim.opt.viewdir = '/tmp/vim/viewdir'
-vim.opt.conceallevel = 2
+vim.opt.conceallevel = 0
 -- hybrid relativenumbers
 vim.o.relativenumber = true
 

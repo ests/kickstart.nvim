@@ -20,8 +20,8 @@ return {
     }
     -- fix ```
     npairs.add_rules {
-      Rule('```', '```', { 'markdown', 'vimwiki', 'rmarkdown', 'pandoc', 'codecompanion' }),
-      Rule('```.*$', '```', { 'markdown', 'vimwiki', 'rmarkdown', 'pandoc', 'codecompanion' }),
+      Rule('```', '```', { 'copilot-chat', 'markdown', 'vimwiki', 'rmarkdown', 'pandoc', 'codecompanion' }),
+      Rule('```.*$', '```', { 'copilot-chat', 'markdown', 'vimwiki', 'rmarkdown', 'pandoc', 'codecompanion' }),
     }
 
     -- (deprecated?) endwise rules
