@@ -567,6 +567,7 @@ require('lazy').setup({
         pyright = {},
         rust_analyzer = {},
         zls = {},
+        jsonls = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -740,6 +741,8 @@ require('lazy').setup({
         vim.b.copilot_suggestion_hidden = false
       end)
 
+      local suggestion = require 'copilot.suggestion'
+
       cmp.setup {
         snippet = {
           expand = function(args)
@@ -793,14 +796,22 @@ require('lazy').setup({
 
         -- mapping = cmp.mapping.preset.insert {
         mapping = {
+          ['<C-n>'] = cmp.mapping(function()
+            cmp.abort()
+            if suggestion.is_visible() then
+              suggestion.accept()
+            else
+              suggestion.next()
+            end
+          end, { 'i', 's' }),
           ['<C-e>'] = cmp.mapping.abort(),
           -- Scroll the documentation window [b]ack / [f]orward
           ['<C-d>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
           ['<C-Space>'] = cmp.mapping.complete {},
           ['<Tab>'] = cmp.mapping(function(fallback)
-            if require('copilot.suggestion').is_visible() then
-              require('copilot.suggestion').accept()
+            if suggestion.is_visible() then
+              suggestion.accept()
             elseif cmp.visible() then
               cmp.select_next_item { behavior = cmp.SelectBehavior.Insert }
             elseif luasnip.expandable() then
