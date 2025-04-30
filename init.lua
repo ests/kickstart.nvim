@@ -91,6 +91,16 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
+-- JSON
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'json',
+  callback = function()
+    vim.opt_local.tabstop = 2
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.expandtab = false
+  end,
+})
+
 -- But Ruby is no better
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'ruby',
@@ -823,6 +833,24 @@ require('lazy').setup({
             end
           end, { 'i', 's' }),
           ['<S-Tab>'] = cmp.mapping(function()
+            if cmp.visible() then
+              cmp.select_prev_item { behavior = cmp.SelectBehavior.Insert }
+            end
+          end, { 'i', 's' }),
+          ['<Down>'] = cmp.mapping(function(fallback)
+            if suggestion.is_visible() then
+              suggestion.accept()
+            elseif cmp.visible() then
+              cmp.select_next_item { behavior = cmp.SelectBehavior.Insert }
+            elseif luasnip.expandable() then
+              luasnip.expand()
+            elseif has_words_before() then
+              cmp.complete()
+            else
+              fallback()
+            end
+          end, { 'i', 's' }),
+          ['<Up>'] = cmp.mapping(function()
             if cmp.visible() then
               cmp.select_prev_item { behavior = cmp.SelectBehavior.Insert }
             end
