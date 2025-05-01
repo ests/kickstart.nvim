@@ -1,12 +1,24 @@
 return {
   'olimorris/codecompanion.nvim',
-  opts = {},
+  opts = {
+    adapters = {
+      copilot = function()
+        return require('codecompanion.adapters').extend('copilot', {
+          schema = {
+            model = {
+              default = 'claude-3.7-sonnet',
+            },
+          },
+        })
+      end,
+    },
+  },
   dependencies = {
     'nvim-lua/plenary.nvim',
     'nvim-treesitter/nvim-treesitter',
   },
   cmd = {
-    'CdeCompanion',
+    'CodeCompanion',
     'CodeCompanionChat',
     'CodeCompanionAdd',
     'CodeCompanionCmd',
