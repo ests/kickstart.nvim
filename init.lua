@@ -20,6 +20,9 @@ vim.g.have_nerd_font = true
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
+-- new in 0.11+
+vim.o.winborder = 'rounded'
+
 -- Make line numbers default
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
@@ -530,11 +533,11 @@ require('lazy').setup({
           ---@param bufnr? integer some lsp support methods only in specific files
           ---@return boolean
           local function client_supports_method(client, method, bufnr)
-            if vim.fn.has 'nvim-0.11' == 1 then
-              return client:supports_method(method, bufnr)
-            else
-              return client.supports_method(method, { bufnr = bufnr })
-            end
+            -- if vim.fn.has 'nvim-0.11' == 1 then
+            return client:supports_method(method, bufnr)
+            -- else
+            --   return client.supports_method(method, { bufnr = bufnr })
+            -- end
           end
 
           -- The following two autocommands are used to highlight references of the
@@ -768,226 +771,100 @@ require('lazy').setup({
         },
         opts = {},
       },
-      'saadparwaiz1/cmp_luasnip',
-
-      -- Adds other completion capabilities.
-      --  nvim-cmp does not ship with all sources by default. They are split
-      --  into multiple repos for maintenance purposes.
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-buffer',
       'onsails/lspkind-nvim',
       'folke/lazydev.nvim',
     },
-    config = function()
-      -- See `:help cmp`
-      local cmp = require 'cmp'
-      local cmp_window = require 'cmp.config.window'
-      local luasnip = require 'luasnip'
-      local lspkind = require 'lspkind'
+    --- @module 'blink.cmp'
+    --- @type blink.cmp.Config
+    opts = {
+      keymap = {
+        -- See :h blink-cmp-config-keymap for defining your own keymap
+        preset = 'default',
+        -- TODO: fallback_to_mappings is not triggered
+        ['<C-n>'] = { 'cancel', 'fallback_to_mappings' },
+        -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
+        --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
+      },
 
-      local function has_words_before()
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
-      end
+      appearance = {
+        -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+        -- Adjusts spacing to ensure icons are aligned
+        nerd_font_variant = 'mono',
+      },
 
-      require('luasnip.loaders.from_lua').lazy_load {
-        paths = { '~/.config/nvim/LuaSnip' },
-      }
+      completion = {
+        ghost_text = { enabled = true },
+        -- By default, you may press `<c-space>` to show the documentation.
+        -- Optionally, set `auto_show = true` to show the documentation after a delay.
+        documentation = { auto_show = false, auto_show_delay_ms = 500 },
+        menu = {
+          draw = {
+            components = {
+              kind_icon = {
+                text = function(ctx)
+                  local lspkind = require 'lspkind'
+                  local icon = ctx.kind_icon
+                  if vim.tbl_contains({ 'Path' }, ctx.source_name) then
+                    local dev_icon, _ = require('nvim-web-devicons').get_icon(ctx.label)
+                    if dev_icon then
+                      icon = dev_icon
+                    end
+                  else
+                    icon = require('lspkind').symbolic(ctx.kind, {
+                      mode = 'symbol',
+                    })
+                  end
 
-      luasnip.config.setup {
-        -- store_selection_keys = "<Tab>",
-        enable_autosnippets = false,
-        delete_check_events = 'TextChanged,InsertLeave',
-        region_check_event = 'InsertEnter,CursorMoved,CursorHold',
-        link_children = false,
-        link_roots = false,
-        keep_roots = false,
-      }
+                  return icon .. ctx.icon_gap
+                end,
 
-      vim.api.nvim_set_hl(0, 'CmpGhostText', { link = 'Comment', default = true })
-
-      cmp.event:on('menu_opened', function()
-        vim.b.copilot_suggestion_hidden = true
-      end)
-
-      cmp.event:on('menu_closed', function()
-        vim.b.copilot_suggestion_hidden = false
-      end)
-
-      local suggestion = require 'copilot.suggestion'
-
-      cmp.setup {
-        snippet = {
-          expand = function(args)
-            luasnip.lsp_expand(args.body)
-          end,
-        },
-        window = {
-          completion = cmp_window.bordered {
-            border = 'rounded',
-          },
-          documentation = cmp_window.bordered {
-            border = 'rounded',
-          },
-        },
-        -- performance = {
-        --   debounce = 180,
-        --   throttle = 60,
-        --   fetching_timeout = 300,
-        --   confirm_resolve_timeout = 400,
-        --   async_budget = 90,
-        --   max_view_entries = 20,
-        -- },
-        preselect = cmp.PreselectMode.None,
-        matching = {
-          disallow_symbol_nonprefix_matching = true,
-          disallow_fuzzy_matching = true,
-          disallow_fullfuzzy_matching = true,
-          disallow_partial_fuzzy_matching = true,
-          disallow_partial_matching = true,
-          disallow_prefix_unmatching = true,
-        },
-        formatting = {
-          format = lspkind.cmp_format {
-            with_text = true,
-            menu = {
-              buffer = '[buf]',
-              luasnip = '[snip]',
-              nvim_lsp = '[lsp]',
-              nvim_lua = '[vim]',
-              path = '[path]',
+                -- Optionally, use the highlight groups from nvim-web-devicons
+                -- You can also add the same function for `kind.highlight` if you want to
+                -- keep the highlight groups in sync with the icons.
+                highlight = function(ctx)
+                  local hl = ctx.kind_hl
+                  if vim.tbl_contains({ 'Path' }, ctx.source_name) then
+                    local dev_icon, dev_hl = require('nvim-web-devicons').get_icon(ctx.label)
+                    if dev_icon then
+                      hl = dev_hl
+                    end
+                  end
+                  return hl
+                end,
+              },
             },
           },
         },
+      },
 
-        -- For an understanding of why these mappings were
-        -- chosen, you will need to read `:help ins-completion`
-
-        -- mapping = cmp.mapping.preset.insert {
-        mapping = {
-          ['<C-n>'] = cmp.mapping(function()
-            cmp.abort()
-            if suggestion.is_visible() then
-              suggestion.accept()
-            else
-              suggestion.next()
-            end
-          end, { 'i', 's' }),
-          ['<C-e>'] = cmp.mapping.abort(),
-          -- Scroll the documentation window [b]ack / [f]orward
-          ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-Space>'] = cmp.mapping.complete {},
-          ['<Tab>'] = cmp.mapping(function(fallback)
-            if suggestion.is_visible() then
-              suggestion.accept()
-            elseif cmp.visible() then
-              cmp.select_next_item { behavior = cmp.SelectBehavior.Insert }
-            elseif luasnip.expandable() then
-              luasnip.expand()
-            elseif has_words_before() then
-              cmp.complete()
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-          ['<S-Tab>'] = cmp.mapping(function()
-            if cmp.visible() then
-              cmp.select_prev_item { behavior = cmp.SelectBehavior.Insert }
-            end
-          end, { 'i', 's' }),
-          ['<Down>'] = cmp.mapping(function(fallback)
-            if suggestion.is_visible() then
-              suggestion.accept()
-            elseif cmp.visible() then
-              cmp.select_next_item { behavior = cmp.SelectBehavior.Insert }
-            elseif luasnip.expandable() then
-              luasnip.expand()
-            elseif has_words_before() then
-              cmp.complete()
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-          ['<Up>'] = cmp.mapping(function()
-            if cmp.visible() then
-              cmp.select_prev_item { behavior = cmp.SelectBehavior.Insert }
-            end
-          end, { 'i', 's' }),
-          ['<CR>'] = cmp.mapping(cmp.mapping.confirm { select = false }, { 'i', 'c' }),
-
-          -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
-          --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
+      sources = {
+        min_keyword_length = 0,
+        default = { 'lsp', 'path', 'snippets', 'lazydev' },
+        providers = {
+          -- lsp = {
+          --   opts = {}, -- Passed to the source directly, varies by source
+          --   max_items = 50,
+          --   min_keyword_length = 2,
+          -- },
+          lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
         },
+      },
 
-        completion = {
-          keyword_length = 2,
-          completeopt = 'menu,menuone,noselect,noinsert,popup',
-          documentation = { auto_show = false, auto_show_delay_ms = 500 },
-        },
+      snippets = { preset = 'luasnip' },
 
-        appearance = {
-          -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-          -- Adjusts spacing to ensure icons are aligned
-          nerd_font_variant = 'mono',
-        },
-
-        completion = {
-          keyword_length = 2,
-          completeopt = 'menu,menuone,noselect,noinsert,popup',
-          documentation = { auto_show = false, auto_show_delay_ms = 500 },
-        },
-
-        sources = {
-          default = { 'lsp', 'path', 'snippets', 'lazydev' },
-          providers = {
-            lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
-          },
-        },
-
-        snippets = { preset = 'luasnip' },
-
-        -- Blink.cmp includes an optional, recommended rust fuzzy matcher,
-        -- which automatically downloads a prebuilt binary when enabled.
-        --
-        -- By default, we use the Lua implementation instead, but you may enable
-        -- the rust implementation via `'prefer_rust_with_warning'`
-        --
-        -- See :h blink-cmp-config-fuzzy for more information
-        fuzzy = { implementation = 'prefer_rust_with_warning' },
-
-        -- Shows a signature help window while you type arguments for a function
-        signature = { enabled = true },
-
-        -- experimental = {
-        --   ghost_text = {
-        --     hl_group = 'CmpGhostText',
-        --   },
-        -- },
-      }
-
-      -- additional cmp setups
-      cmp.setup.filetype('ruby', {
-        sources = cmp.config.sources({
-          { name = 'luasnip' },
-        }, { { name = 'nvim_lsp' } }, { { name = 'buffer' } }),
-      })
+      -- Blink.cmp includes an optional, recommended rust fuzzy matcher,
+      -- which automatically downloads a prebuilt binary when enabled.
       --
-      -- cmp.setup.filetype('gitcommit', {
-      --   sources = cmp.config.sources {
-      --     { name = 'buffer' }, -- You can specify the `cmp_git` source if you were installed it.
-      --   },
-      -- })
+      -- By default, we use the Lua implementation instead, but you may enable
+      -- the rust implementation via `'prefer_rust_with_warning'`
       --
-      -- -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-      -- cmp.setup.cmdline({ '/', '?' }, {
-      --   mapping = cmp.mapping.preset.cmdline(),
-      --   sources = {
-      --     { name = 'buffer' },
-      --   },
-      -- })
-    end,
+      -- See :h blink-cmp-config-fuzzy for more information
+      fuzzy = { implementation = 'prefer_rust_with_warning' },
+
+      -- Shows a signature help window while you type arguments for a function
+      signature = { enabled = true }, -- TODO: still experimental
+    },
+    opts_extend = { 'sources.default' },
   },
 
   -- Highlight todo, notes, etc in comments
