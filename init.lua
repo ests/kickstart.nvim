@@ -781,7 +781,9 @@ require('lazy').setup({
         -- See :h blink-cmp-config-keymap for defining your own keymap
         preset = 'default',
         -- TODO: fallback_to_mappings is not triggered
-        ['<C-n>'] = { 'cancel', 'fallback_to_mappings' },
+        ['<C-n>'] = { 'hide', 'fallback_to_mappings' },
+        ['<Right>'] = { 'select_and_accept' },
+        ['<Left>'] = { 'hide' },
         -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
         --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
       },
@@ -802,7 +804,7 @@ require('lazy').setup({
             components = {
               kind_icon = {
                 text = function(ctx)
-                  local lspkind = require 'lspkind'
+                  -- local lspkind = require 'lspkind'
                   local icon = ctx.kind_icon
                   if vim.tbl_contains({ 'Path' }, ctx.source_name) then
                     local dev_icon, _ = require('nvim-web-devicons').get_icon(ctx.label)
