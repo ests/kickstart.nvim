@@ -21,7 +21,7 @@ vim.g.have_nerd_font = true
 --  For more options, you can see `:help option-list`
 
 -- new in 0.11+
-vim.o.winborder = 'rounded'
+-- vim.o.winborder = 'rounded'
 
 -- Make line numbers default
 vim.opt.number = true
