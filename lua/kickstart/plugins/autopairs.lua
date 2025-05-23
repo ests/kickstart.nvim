@@ -20,8 +20,8 @@ return {
     }
     -- fix ```
     npairs.add_rules {
-      Rule('```', '```', { 'copilot-chat', 'markdown', 'vimwiki', 'rmarkdown', 'pandoc', 'codecompanion' }),
-      Rule('```.*$', '```', { 'copilot-chat', 'markdown', 'vimwiki', 'rmarkdown', 'pandoc', 'codecompanion' }),
+      Rule('```', '```', { 'copilot-chat', 'markdown', 'vimwiki', 'rmarkdown', 'pandoc', 'codecompanion', 'cmp_menu', 'popup' }),
+      Rule('```.*$', '```', { 'copilot-chat', 'markdown', 'vimwiki', 'rmarkdown', 'pandoc', 'codecompanion', 'cmp_menu', 'popup' }),
     }
 
     -- (deprecated?) endwise rules
@@ -32,14 +32,5 @@ return {
     -- local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
     -- local cmp = require 'cmp'
     -- cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
-  end,
-  -- Optional dependency
-  dependencies = { 'hrsh7th/nvim-cmp' },
-  config = function()
-    require('nvim-autopairs').setup {}
-    -- If you want to automatically add `(` after selecting a function or method
-    local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
-    local cmp = require 'cmp'
-    cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
   end,
 }
