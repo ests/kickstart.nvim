@@ -123,7 +123,7 @@ vim.api.nvim_create_autocmd('FileType', {
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'ruby',
   callback = function()
-    vim.o_local.indentkeys:remove { '.', '0{' }
+    vim.opt_local.indentkeys:remove { '.', '0{' }
   end,
 })
 
