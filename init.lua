@@ -789,8 +789,13 @@ require('lazy').setup({
         ghost_text = { enabled = true },
         -- By default, you may press `<c-space>` to show the documentation.
         -- Optionally, set `auto_show = true` to show the documentation after a delay.
-        documentation = { auto_show = false, auto_show_delay_ms = 500 },
+        documentation = {
+          window = { border = 'double' },
+          auto_show = false,
+          auto_show_delay_ms = 500,
+        },
         menu = {
+          border = 'rounded',
           draw = {
             components = {
               kind_icon = {
@@ -832,13 +837,21 @@ require('lazy').setup({
 
       sources = {
         min_keyword_length = 0,
-        default = { 'lsp', 'path', 'snippets', 'lazydev' },
+        default = { 'lsp', 'path', 'snippets' },
+        per_filetype = {
+          ruby = { 'lsp', 'path', 'snippets', 'buffer' },
+          lua = { inherit_defaults = true, 'lazydev' },
+        },
         providers = {
           -- lsp = {
           --   opts = {}, -- Passed to the source directly, varies by source
           --   max_items = 50,
           --   min_keyword_length = 2,
           -- },
+          buffer = {
+            max_items = 7,
+            min_keyword_length = 3,
+          },
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
         },
       },
@@ -853,7 +866,10 @@ require('lazy').setup({
       fuzzy = { implementation = 'prefer_rust_with_warning' },
 
       -- Shows a signature help window while you type arguments for a function
-      signature = { enabled = true }, -- TODO: still experimental
+      signature = {
+        enabled = true,
+        window = { border = 'single' },
+      }, -- TODO: still experimental
     },
     opts_extend = { 'sources.default' },
   },
