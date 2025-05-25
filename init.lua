@@ -101,10 +101,10 @@ vim.opt_local.expandtab = true
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'go',
   callback = function()
-    vim.o_local.tabstop = 4
-    vim.o_local.shiftwidth = 4
-    vim.o_local.expandtab = false
-    vim.o.listchars = { tab = '  ', trail = '·', nbsp = '␣' }
+    vim.opt_local.tabstop = 4
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.expandtab = false
+    vim.opt.listchars = { tab = '  ', trail = '·', nbsp = '␣' }
     vim.cmd 'iabbrev dl :='
   end,
 })
@@ -113,9 +113,9 @@ vim.api.nvim_create_autocmd('FileType', {
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'json',
   callback = function()
-    vim.o_local.tabstop = 2
-    vim.o_local.shiftwidth = 2
-    vim.o_local.expandtab = false
+    vim.opt_local.tabstop = 2
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.expandtab = false
   end,
 })
 
