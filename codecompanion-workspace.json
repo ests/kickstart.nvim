@@ -26,14 +26,6 @@
 			]
 		},
 		{
-			"name": "Completion & Snippets",
-			"system_prompt": "Assist with blink.cmp configuration, completion sources, snippet management, and autocompletion workflows.",
-			"data": [
-				"init_lua_completion",
-				"ruby_snippets"
-			]
-		},
-		{
 			"name": "CodeCompanion & AI Tools",
 			"system_prompt": "Help configure and optimize CodeCompanion for LLM interactions, as well as Copilot integration. Focus on AI-assisted coding workflows and prompt engineering.",
 			"data": [
@@ -101,11 +93,6 @@
 			"type": "symbols",
 			"path": "./init.lua",
 			"description": "Completion and snippet related configurations from init.lua"
-		},
-		"ruby_snippets": {
-			"type": "file",
-			"path": "./LuaSnip/ruby.lua",
-			"description": "Ruby language snippets for LuaSnip"
 		},
 		"codecompanion_config": {
 			"type": "file",
