@@ -837,11 +837,22 @@ require('lazy').setup({
 
       sources = {
         min_keyword_length = 0,
-        default = { 'lsp', 'path', 'snippets' },
-        per_filetype = {
-          ruby = { 'lsp', 'path', 'snippets', 'buffer' },
-          lua = { inherit_defaults = true, 'lazydev' },
-        },
+        default = function()
+          local success, node = pcall(vim.treesitter.get_node)
+          if success and node and vim.tbl_contains({ 'comment', 'line_comment', 'block_comment' }, node:type()) then
+            return { 'buffer' }
+          elseif vim.bo.filetype == 'ruby' or vim.bo.filetype == 'eruby' then
+            return { 'buffer' }
+          elseif vim.bo.filetype == 'lua' then
+            return { 'lsp', 'buffer' }
+          else
+            return { 'lsp', 'snippets', 'buffer' }
+          end
+        end,
+        -- per_filetype = {
+        --   ruby = { 'lsp', 'path', 'snippets', 'buffer' },
+        --   lua = { inherit_defaults = true, 'lazydev' },
+        -- },
         providers = {
           -- lsp = {
           --   opts = {}, -- Passed to the source directly, varies by source
