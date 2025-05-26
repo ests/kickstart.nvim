@@ -1,118 +1,104 @@
 {
-  "do end block": {
-    "prefix": "do",
-    "body": [
-      "do",
-      "	$0",
-      "end"
-    ],
-    "description": "Block with do..end"
-  },
-  "do end block with params": {
-    "prefix": "dob",
-    "body": [
-      "do |${1:params}|",
-      "	$0",
-      "end"
-    ],
-    "description": "Block with do..end and parameters"
-  },
-  "single line curly block": {
-    "prefix": "{}",
-    "body": [
-      "{ |${1:params}| $0 }"
-    ],
-    "description": "Single line block with {}"
-  },
-  "symbol to proc": {
-    "prefix": "&:",
-    "body": [
-      "&:${1:method}"
-    ],
-    "description": "Symbol to proc shorthand (&:method)"
-  },
-  "each block": {
-    "prefix": "each",
-    "body": [
-      "${1:collection}.each { |${2:element}|",
-      "	$0",
-      "}"
-    ],
-    "description": "Iterate over a collection with a block"
-  },
-  "map block": {
-    "prefix": "map",
-    "body": [
-      "${1:collection}.map { |${2:element}|",
-      "	$0",
-      "}"
-    ],
-    "description": "Map over a collection with a block"
-  },
-  "select block": {
-    "prefix": "select",
-    "body": [
-      "${1:collection}.select { |${2:element}|",
-      "	$0",
-      "}"
-    ],
-    "description": "Select elements from a collection with a block"
-  },
-  "tap block": {
-    "prefix": "tap",
-    "body": [
-      "${1:object}.tap { |${2:it}|",
-      "	$0",
-      "}"
-    ],
-    "description": "Tap into a method chain"
-  },
-  "let (RSpec)": {
-    "prefix": "let",
-    "body": [
-      "let(:${1:name}) { $0 }"
-    ],
-    "description": "RSpec let block"
-  },
-  "let! (RSpec)": {
-    "prefix": "let!",
-    "body": [
-      "let!(:${1:name}) { $0 }"
-    ],
-    "description": "RSpec let! block"
-  },
-  "describe (RSpec)": {
-    "prefix": "describe",
-    "body": [
-      "describe ${1:class_or_string} do",
-      "	$0",
-      "end"
-    ],
-    "description": "RSpec describe block"
-  },
-  "context (RSpec)": {
-    "prefix": "context",
-    "body": [
-      "context '${1:description}' do",
-      "	$0",
-      "end"
-    ],
-    "description": "RSpec context block"
-  },
-  "it (RSpec)": {
-    "prefix": "it",
-    "body": [
-      "it '${1:description}' do",
-      "	$0",
-      "end"
-    ],
-    "description": "RSpec it block"
-  },
-  "safe navigation": {
-    "prefix": "&.",
-    "body": [
-      "&.$0"
-    ],
-    "description": "Safe navigation operator"
-  }
+	"do end block": {
+		"prefix": ">>d",
+		"body": [
+			"do",
+			"  $0",
+			"end"
+		],
+		"description": "Block with do..end"
+	},
+	"do end block with params": {
+		"prefix": ">>do",
+		"body": [
+			"do |${1:params}|",
+			"  $0",
+			"end"
+		],
+		"description": "Block with do..end and parameters"
+	},
+	"single line curly block": {
+		"prefix": ">>ib",
+		"body": [
+			"{ |${1:params}| $0 }"
+		],
+		"description": "Single line block with {}"
+	},
+	"each block": {
+		"prefix": ">>e",
+		"body": [
+			"each do |${2:element}|",
+			"  $0",
+			"end"
+		],
+		"description": "Iterate over a collection with a block"
+	},
+	"map block": {
+		"prefix": ">>m",
+		"body": [
+			"map do |${2:element}|",
+			"  $0",
+			"end"
+		],
+		"description": "Map over a collection with a block"
+	},
+	"select block": {
+		"prefix": ">>s",
+		"body": [
+			"select { |${2:element}|",
+			"  $0",
+			"}"
+		],
+		"description": "Select elements from a collection with a block"
+	},
+	"tap block": {
+		"prefix": ">>t",
+		"body": [
+			"tap { |${2:it}|",
+			"  $0",
+			"}"
+		],
+		"description": "Tap into a method chain"
+	},
+	"let (RSpec)": {
+		"prefix": ">>let",
+		"body": [
+			"let(:${1:name}) { $0 }"
+		],
+		"description": "RSpec let block"
+	},
+	"let! (RSpec)": {
+		"prefix": ">>let!",
+		"body": [
+			"let!(:${1:name}) { $0 }"
+		],
+		"description": "RSpec let! block"
+	},
+	"describe (RSpec)": {
+		"prefix": ">>des",
+		"body": [
+			"describe ${1:class_or_string} do",
+			"  $0",
+			"end"
+		],
+		"description": "RSpec describe block"
+	},
+	"context (RSpec)": {
+		"prefix": ">>con",
+		"body": [
+			"context '${1:description}' do",
+			"  $0",
+			"end"
+		],
+		"description": "RSpec context block"
+	},
+	"it (RSpec)": {
+		"prefix": ">>it",
+		"body": [
+			"it '${1:description}' do",
+			"  $0",
+			"end"
+		],
+		"description": "RSpec it block"
+	}
 }

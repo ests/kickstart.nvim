@@ -842,7 +842,7 @@ require('lazy').setup({
           if success and node and vim.tbl_contains({ 'comment', 'line_comment', 'block_comment' }, node:type()) then
             return { 'buffer' }
           elseif vim.bo.filetype == 'ruby' or vim.bo.filetype == 'eruby' then
-            return { 'buffer' }
+            return { 'snippets', 'buffer' }
           elseif vim.bo.filetype == 'lua' then
             return { 'lsp', 'buffer' }
           else
