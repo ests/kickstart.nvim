@@ -772,11 +772,21 @@ require('lazy').setup({
     opts = {
       keymap = {
         -- See :h blink-cmp-config-keymap for defining your own keymap
-        preset = 'default',
+        preset = 'none',
+        ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+        ['<C-e>'] = { 'hide' },
+        ['<C-y>'] = { 'select_and_accept' },
+        ['<Up>'] = { 'select_prev', 'fallback' },
+        ['<Down>'] = { 'select_next', 'fallback' },
         -- TODO: fallback_to_mappings is not triggered
         ['<C-n>'] = { 'hide', 'fallback_to_mappings' },
         ['<Right>'] = { 'select_and_accept' },
         ['<Left>'] = { 'hide' },
+        ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+        ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+        ['<Tab>'] = { 'snippet_forward', 'fallback' },
+        ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
+        ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
       },
 
       appearance = {
@@ -786,15 +796,23 @@ require('lazy').setup({
       },
 
       completion = {
-        ghost_text = { enabled = true },
+        list = {
+          max_items = 50,
+        },
+        keyword = { range = 'prefix' },
+        trigger = {
+          show_in_snippet = false,
+        },
+        ghost_text = { enabled = false },
         -- By default, you may press `<c-space>` to show the documentation.
         -- Optionally, set `auto_show = true` to show the documentation after a delay.
         documentation = {
           window = { border = 'double' },
-          auto_show = false,
+          auto_show = true,
           auto_show_delay_ms = 500,
         },
         menu = {
+          auto_show = true,
           border = 'rounded',
           draw = {
             components = {
@@ -854,16 +872,21 @@ require('lazy').setup({
         --   lua = { inherit_defaults = true, 'lazydev' },
         -- },
         providers = {
-          -- lsp = {
-          --   opts = {}, -- Passed to the source directly, varies by source
-          --   max_items = 50,
-          --   min_keyword_length = 2,
-          -- },
+          lsp = {
+            opts = {}, -- Passed to the source directly, varies by source
+            max_items = 10,
+            min_keyword_length = 2,
+          },
           buffer = {
             max_items = 7,
-            min_keyword_length = 3,
+            min_keyword_length = 2,
           },
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+          snippets = {
+            opts = {
+              friendly_snippets = false,
+            },
+          },
         },
       },
 
@@ -874,7 +897,14 @@ require('lazy').setup({
       -- the rust implementation via `'prefer_rust_with_warning'`
       --
       -- See :h blink-cmp-config-fuzzy for more information
-      fuzzy = { implementation = 'prefer_rust_with_warning' },
+      fuzzy = {
+        implementation = 'prefer_rust_with_warning',
+        max_typos = function()
+          return 0
+        end,
+        use_frecency = true,
+        use_proximity = true,
+      },
 
       -- Shows a signature help window while you type arguments for a function
       signature = {

@@ -1,15 +1,6 @@
 {
-	"do end block": {
-		"prefix": ">>d",
-		"body": [
-			"do",
-			"  $0",
-			"end"
-		],
-		"description": "Block with do..end"
-	},
 	"do end block with params": {
-		"prefix": ">>do",
+		"prefix": "do",
 		"body": [
 			"do |${1:params}|",
 			"  $0",
@@ -18,64 +9,38 @@
 		"description": "Block with do..end and parameters"
 	},
 	"single line curly block": {
-		"prefix": ">>ib",
+		"prefix": "ib",
 		"body": [
 			"{ |${1:params}| $0 }"
 		],
 		"description": "Single line block with {}"
 	},
-	"each block": {
-		"prefix": ">>e",
-		"body": [
-			"each do |${2:element}|",
-			"  $0",
-			"end"
+	"map(&:foo)": {
+		"prefix": [
+			"ma",
+			"map"
 		],
-		"description": "Iterate over a collection with a block"
-	},
-	"map block": {
-		"prefix": ">>m",
 		"body": [
-			"map do |${2:element}|",
-			"  $0",
-			"end"
+			"map(&:$1)$0"
 		],
 		"description": "Map over a collection with a block"
 	},
-	"select block": {
-		"prefix": ">>s",
-		"body": [
-			"select { |${2:element}|",
-			"  $0",
-			"}"
-		],
-		"description": "Select elements from a collection with a block"
-	},
-	"tap block": {
-		"prefix": ">>t",
-		"body": [
-			"tap { |${2:it}|",
-			"  $0",
-			"}"
-		],
-		"description": "Tap into a method chain"
-	},
 	"let (RSpec)": {
-		"prefix": ">>let",
+		"prefix": "le",
 		"body": [
 			"let(:${1:name}) { $0 }"
 		],
 		"description": "RSpec let block"
 	},
 	"let! (RSpec)": {
-		"prefix": ">>let!",
+		"prefix": "le!",
 		"body": [
 			"let!(:${1:name}) { $0 }"
 		],
 		"description": "RSpec let! block"
 	},
 	"describe (RSpec)": {
-		"prefix": ">>des",
+		"prefix": "des",
 		"body": [
 			"describe ${1:class_or_string} do",
 			"  $0",
@@ -84,7 +49,7 @@
 		"description": "RSpec describe block"
 	},
 	"context (RSpec)": {
-		"prefix": ">>con",
+		"prefix": "con",
 		"body": [
 			"context '${1:description}' do",
 			"  $0",
@@ -93,7 +58,7 @@
 		"description": "RSpec context block"
 	},
 	"it (RSpec)": {
-		"prefix": ">>it",
+		"prefix": "it",
 		"body": [
 			"it '${1:description}' do",
 			"  $0",
