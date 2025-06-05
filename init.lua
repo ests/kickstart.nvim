@@ -802,6 +802,9 @@ require('lazy').setup({
         keyword = { range = 'prefix' },
         trigger = {
           show_in_snippet = false,
+          -- Add trigger characters for immediate completion
+          show_on_trigger_character = true,
+          show_on_insert_on_trigger_character = true,
         },
         ghost_text = { enabled = false },
         -- By default, you may press `<c-space>` to show the documentation.
@@ -854,7 +857,7 @@ require('lazy').setup({
       },
 
       sources = {
-        min_keyword_length = 0,
+        min_keyword_length = 0, -- Set to 0 to allow trigger characters to work
         default = function()
           local success, node = pcall(vim.treesitter.get_node)
           if success and node and vim.tbl_contains({ 'comment', 'line_comment', 'block_comment' }, node:type()) then
@@ -875,7 +878,8 @@ require('lazy').setup({
           lsp = {
             opts = {}, -- Passed to the source directly, varies by source
             max_items = 10,
-            min_keyword_length = 2,
+            min_keyword_length = 0, -- Allow immediate completion on trigger chars
+            trigger_characters = { '.', '::', '->', '=>', ':', '(', '=' }, -- Add common trigger chars
           },
           buffer = {
             max_items = 7,
