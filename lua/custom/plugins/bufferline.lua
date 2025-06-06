@@ -57,7 +57,8 @@ return {
     bufferline.setup {
       options = {
         mode = 'buffers',
-        style_preset = bufferline.style_preset.default,
+        style_preset = bufferline.style_preset.minimal,
+        separator_style = 'thick',
         themable = true,
         numbers = function(opts)
           return string.format('%s|%s', opts.id, opts.raise(opts.ordinal))
@@ -66,10 +67,10 @@ return {
         right_mouse_command = 'Bdelete %d',
         left_mouse_command = 'buffer %d',
         middle_mouse_command = 'Bdelete! %d',
-        indicator = {
-          icon = '▎',
-          style = 'underline',
-        },
+        -- indicator = {
+        --   icon = '▎',
+        --   style = 'underline',
+        -- },
         buffer_close_icon = '󰅖',
         modified_icon = '● ',
         close_icon = '',
@@ -102,7 +103,6 @@ return {
         show_tab_indicators = true,
         show_duplicate_prefix = true,
         persist_buffer_sort = true,
-        separator_style = 'slant',
         enforce_regular_tabs = false,
         always_show_bufferline = true,
         hover = {

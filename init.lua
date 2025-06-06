@@ -1037,7 +1037,7 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter-context',
     dependencies = { 'nvim-treesitter/nvim-treesitter', event = 'VeryLazy' },
     opts = {
-      enable = true,
+      enable = false,
       multiwindow = false,
       max_lines = 5, -- How many lines the window should span. Values <= 0 mean no limit.
       min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
