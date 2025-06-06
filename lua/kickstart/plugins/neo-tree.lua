@@ -9,7 +9,8 @@ return {
     'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
     'MunifTanjim/nui.nvim',
   },
-  lazy = false,
+  lazy = true,
+  cmd = "Neotree",
   keys = {
     { '<leader>\\', '<cmd>Neotree toggle focus last float<CR>', desc = 'NeoTree toggle', silent = true },
     { '<C-n>', '<cmd>Neotree toggle focus last left<CR>', desc = 'NeoTree toggle', silent = true },

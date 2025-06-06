@@ -75,7 +75,7 @@ return {
       numbers = function(opts)
         return string.format('%s|%s', opts.id, opts.raise(opts.ordinal))
       end,
-      sort_by = 'inser_after_current',
+      sort_by = 'insert_after_current',
       diagnostics_indicator = function(_, _, diagnostics_dict, _)
         local s = ' '
         for e, n in pairs(diagnostics_dict) do
@@ -89,10 +89,14 @@ return {
   config = function(_, opts)
     require('bufferline').setup(opts)
     -- Fix bufferline when restoring a session
+    local group = vim.api.nvim_create_augroup('CustomBufferlineRefresh', { clear = true })
     vim.api.nvim_create_autocmd({ 'BufAdd', 'BufDelete' }, {
+      group = group,
       callback = function()
         vim.schedule(function()
-          pcall(nvim_bufferline)
+          -- Temporary log message
+          print('Refreshing bufferline due to BufAdd/BufDelete')
+          pcall(require('bufferline').setup, opts)
         end)
       end,
     })

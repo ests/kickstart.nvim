@@ -32,7 +32,7 @@ return {
             'filename',
             path = 1,
             symbols = { modified = '', readonly = '[ro]', unnamed = '[no name]', newfile = '' },
-            shorting_target = 10,
+            shortening_target = 40,
           },
         },
 
@@ -48,7 +48,7 @@ return {
             'filename',
             path = 1,
             symbols = { modified = '', readonly = '[ro]', unnamed = '[no name]', newfile = '' },
-            shorting_target = 10,
+            shortening_target = 40,
           },
         },
         lualine_x = { 'location' },

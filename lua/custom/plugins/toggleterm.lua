@@ -1,8 +1,7 @@
 return {
-  {
-    'akinsho/toggleterm.nvim',
-    version = '*',
-    cmd = {
+  'akinsho/toggleterm.nvim',
+  version = '*',
+  cmd = {
       'ToggleTerm',
       'TermExec',
       'TermSelect',
@@ -27,5 +26,4 @@ return {
       vim.cmd [[cab tt ToggleTerm]]
       vim.cmd [[cab tts ToggleTermSendVisualSelection]]
     end,
-  },
 }
