@@ -57,10 +57,6 @@ end)
 -- Enable break indent
 vim.o.breakindent = true
 
--- Save undo history
-vim.o.undofile = true
-vim.o.ul = 500 -- undolevel
-
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.o.ignorecase = true
 vim.o.smartcase = true
@@ -148,7 +144,9 @@ vim.o.writebackup = true
 vim.o.backup = true
 vim.o.backupcopy = 'auto'
 vim.o.backupdir = '/tmp/vim/backup'
--- vim.o.undofile = true -- This is already set above
+-- Save undo history
+vim.o.undofile = true
+vim.o.ul = 500 -- undolevel
 vim.o.undodir = '/tmp/vim/undo'
 vim.o.viewdir = '/tmp/vim/viewdir'
 vim.o.conceallevel = 0
@@ -701,6 +699,7 @@ require('lazy').setup({
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
         automatic_installation = false,
+        automatic_enable = true,
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
@@ -876,7 +875,6 @@ require('lazy').setup({
             opts = {}, -- Passed to the source directly, varies by source
             max_items = 10,
             min_keyword_length = 0, -- Allow immediate completion on trigger chars
-            trigger_characters = { '.', '::', '->', '=>', ':', '(', '=' }, -- Add common trigger chars
           },
           buffer = {
             max_items = 7,
@@ -1105,7 +1103,7 @@ require('lazy').setup({
 })
 
 -- Load custom keymaps
-require('custom.keymaps')
+require 'custom.keymaps'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
