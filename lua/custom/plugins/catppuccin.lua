@@ -8,7 +8,7 @@ return {
 
     local colors = require('catppuccin.palettes').get_palette()
     require('catppuccin').setup {
-      transparent_background = true,
+      transparent_background = false,
       term_colors = true,
       compile = {
         enabled = true,

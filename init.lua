@@ -57,10 +57,6 @@ end)
 -- Enable break indent
 vim.o.breakindent = true
 
--- Save undo history
-vim.o.undofile = true
-vim.o.ul = 500 -- undolevel
-
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.o.ignorecase = true
 vim.o.smartcase = true
@@ -81,7 +77,7 @@ vim.o.splitbelow = true
 --  Notice listchars is set using `vim.opt` instead of `vim.o`.
 --  It is very similar to `vim.o` but offers an interface for conveniently interacting with tables.
 --   See `:help lua-options`
---   and `:help lua-options-guide`vim.o.list = true
+--   and `:help lua-options-guide`
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
@@ -97,9 +93,13 @@ vim.opt_local.tabstop = 2
 vim.opt_local.shiftwidth = 2
 vim.opt_local.expandtab = true
 
+-- Create a new augroup for FileType settings
+local filetype_settings_group = vim.api.nvim_create_augroup('FileTypeSettings', { clear = true })
+
 -- Go is a bit weird
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'go',
+  group = filetype_settings_group,
   callback = function()
     vim.opt_local.tabstop = 4
     vim.opt_local.shiftwidth = 4
@@ -112,6 +112,7 @@ vim.api.nvim_create_autocmd('FileType', {
 -- JSON
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'json',
+  group = filetype_settings_group,
   callback = function()
     vim.opt_local.tabstop = 2
     vim.opt_local.shiftwidth = 2
@@ -122,6 +123,7 @@ vim.api.nvim_create_autocmd('FileType', {
 -- But Ruby is no better
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'ruby',
+  group = filetype_settings_group,
   callback = function()
     vim.opt_local.indentkeys:remove { '.', '0{' }
   end,
@@ -136,13 +138,15 @@ vim.o.cursorline = false
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.o.scrolloff = 10
 
--- ests sefalsettings
+-- sets safe default settings
 vim.o.directory = '/tmp/vim/swap'
 vim.o.writebackup = true
 vim.o.backup = true
 vim.o.backupcopy = 'auto'
 vim.o.backupdir = '/tmp/vim/backup'
+-- Save undo history
 vim.o.undofile = true
+vim.o.ul = 500 -- undolevel
 vim.o.undodir = '/tmp/vim/undo'
 vim.o.viewdir = '/tmp/vim/viewdir'
 vim.o.conceallevel = 0
@@ -182,15 +186,6 @@ end, { desc = 'Open diagnostic float' })
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-
--- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---
---  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
@@ -704,6 +699,7 @@ require('lazy').setup({
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
         automatic_installation = false,
+        automatic_enable = true,
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
@@ -879,7 +875,6 @@ require('lazy').setup({
             opts = {}, -- Passed to the source directly, varies by source
             max_items = 10,
             min_keyword_length = 0, -- Allow immediate completion on trigger chars
-            trigger_characters = { '.', '::', '->', '=>', ':', '(', '=' }, -- Add common trigger chars
           },
           buffer = {
             max_items = 7,
@@ -1041,20 +1036,12 @@ require('lazy').setup({
   {
     'nvim-treesitter/nvim-treesitter-context',
     dependencies = { 'nvim-treesitter/nvim-treesitter', event = 'VeryLazy' },
+    keys = {
+      { '<leader>tc', '<cmd>TSContext toggle<cr>', desc = 'Toggle tree-sitter context' },
+    },
     opts = {
-      enable = true,
-      multiwindow = false,
-      max_lines = 5, -- How many lines the window should span. Values <= 0 mean no limit.
-      min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+      enable = false,
       line_numbers = true,
-      multiline_threshold = 5, -- Maximum number of lines to show for a single context
-      trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-      mode = 'cursor', -- Line used to calculate context. Choices: 'cursor', 'topline'
-      -- Separator between context and content. Should be a single character string, like '-'.
-      -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
-      -- separator = nil,
-      -- zindex = 20, -- The Z-index of the context window
-      -- on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
     },
   },
 
@@ -1107,58 +1094,8 @@ require('lazy').setup({
   },
 })
 
--- TODO: move those to separate files
-local keymap = vim.keymap.set
-
--- Map Ctrl+s to save the current buffer
-vim.api.nvim_set_keymap('n', '<C-s>', ':w<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('i', '<C-s>', '<Esc>:w<CR>', { noremap = true, silent = true })
-
--- custom basics
-keymap('n', 'Q', '<Nop>', { noremap = true, silent = true })
-keymap('n', 'q', '<Nop>', { noremap = true, silent = true })
-keymap('n', '*', '*<c-o>', { noremap = true, silent = true })
-keymap('n', '<leader>x', '<cmd>Bdelete<cr>', { noremap = true, silent = true })
-keymap('n', '<leader>X', '<cmd>bdelete<cr>', { noremap = true, silent = true })
-
--- save all quit
-local function save_all_and_quit()
-  -- Get the list of all buffers
-  local buffers = vim.api.nvim_list_bufs()
-  for _, buf in ipairs(buffers) do
-    -- Check if the buffer is loaded, modifiable, and has a filename
-    if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].modifiable and vim.api.nvim_buf_get_name(buf) ~= '' then
-      -- Save the buffer
-      vim.api.nvim_buf_call(buf, function()
-        vim.cmd 'silent update'
-      end)
-    end
-  end
-  -- Quit Neovim, closing all windows and discarding any changes in buffers that couldn't be saved
-  vim.cmd 'qa!'
-end
-keymap('n', '<c-x>', '', { noremap = true, silent = true, callback = save_all_and_quit })
-
--- movement
-keymap({ 'n', 'v' }, '<c-h>', '<c-w>h', { noremap = true, silent = true })
-keymap({ 'n', 'v' }, '<c-j>', '<c-w>j', { noremap = true, silent = true })
-keymap({ 'n', 'v' }, '<c-k>', '<c-w>k', { noremap = true, silent = true })
-keymap({ 'n', 'v' }, '<c-l>', '<c-w>l', { noremap = true, silent = true })
-
--- toggle last buffers
-keymap('n', ',,', '<cmd>b#<cr>', { noremap = true, silent = true })
-
-keymap('v', 'K', ":m '<-2<CR>gv=gv", { noremap = true })
-keymap('v', 'J', ":m '>+1<CR>gv=gv", { noremap = true })
-
--- visual indent
-keymap('v', '<', '<gv', { noremap = true, silent = true })
-keymap('v', '>', '>gv', { noremap = true, silent = true })
-
--- global abbrevs
--- vim.cmd [[iab <expr> dti strftime("%Y-%m-%d")]]
--- vim.cmd [[iab <expr> dtl strftime("%y.%m.%d")]]
--- vim.cmd [[iab <expr> dts strftime("%m.%d")]]
+-- Load custom keymaps
+require 'custom.keymaps'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

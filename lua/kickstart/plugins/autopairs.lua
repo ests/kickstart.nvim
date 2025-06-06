@@ -22,9 +22,9 @@ return {
       Rule('```.*$', '```', { 'copilot-chat', 'markdown', 'vimwiki', 'rmarkdown', 'pandoc', 'codecompanion', 'cmp_menu', 'popup' }),
     }
 
-    -- (deprecated?) endwise rules
-    npairs.add_rules(require 'nvim-autopairs.rules.endwise-lua')
-    npairs.add_rules(require 'nvim-autopairs.rules.endwise-ruby')
+    -- NOTE: These endwise rules might be deprecated or conflict with nvim-treesitter-endwise. Review if needed.
+    -- npairs.add_rules(require 'nvim-autopairs.rules.endwise-lua')
+    -- npairs.add_rules(require 'nvim-autopairs.rules.endwise-ruby')
 
     -- If you want to automatically add `(` after selecting a function or method
     -- local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
