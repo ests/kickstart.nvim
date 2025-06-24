@@ -6,25 +6,28 @@ return {
     use_default_actions = true,
     use_default_prompt_library = true,
     adapters = {
-      copilot = function()
-        return require('codecompanion.adapters').extend('copilot', {
+      anthropic = function()
+        return require('codecompanion.adapters').extend('anthropic', {
           schema = {
             model = {
-              default = 'claude-sonnet-4',
+              default = 'claude-sonnet-4-20250514',
             },
+          },
+          env = {
+            api_key = 'cmd:op read op://personal/AnthropicApiKey/credential --no-newline',
           },
         })
       end,
     },
     strategies = {
       chat = {
-        adapter = 'copilot',
+        adapter = 'anthropic',
       },
       inline = {
-        adapter = 'copilot',
+        adapter = 'anthropic',
       },
       agent = {
-        adapter = 'copilot',
+        adapter = 'anthropic',
       },
     },
     display = {
