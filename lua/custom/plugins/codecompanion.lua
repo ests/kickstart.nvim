@@ -18,6 +18,13 @@ return {
           },
         })
       end,
+      tavily = function()
+        return require('codecompanion.adapters').extend('tavily', {
+          env = {
+            api_key = 'cmd:envchain ests/personal/anthropic printenv TAVILY_API_KEY',
+          },
+        })
+      end,
     },
     strategies = {
       chat = {
