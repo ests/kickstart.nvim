@@ -14,7 +14,7 @@ return {
             },
           },
           env = {
-            api_key = 'cmd:op read op://personal/AnthropicApiKey/credential --no-newline',
+            api_key = 'cmd:envchain ests/personal/anthropic printenv ANTHROPIC_API_KEY',
           },
         })
       end,
