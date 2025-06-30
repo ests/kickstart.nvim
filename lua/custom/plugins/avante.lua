@@ -20,9 +20,32 @@ return {
         timeout = 30000,
         extra_request_body = {
           temperature = 0.75,
-          max_tokens = 20480,
+          max_tokens = 40000,
         },
       },
+    },
+    hints = { enabled = true }, -- ??
+    mappings = {
+      sidebar = {
+        close_from_input = { normal = '<Esc>', insert = '<C-d>' },
+      },
+    },
+    windows = {
+      width = 35,
+      edit = { start_insert = true },
+      ask = { start_insert = true },
+      input = {
+        height = 12,
+        provider = 'snacks',
+        provider_opts = {
+          title = 'Avante Input',
+          icon = ' ',
+        },
+      },
+    },
+    suggestion = {
+      debounce = 1200,
+      throttle = 1200,
     },
     system_prompt = function()
       local hub = require('mcphub').get_hub_instance()
@@ -35,6 +58,7 @@ return {
     end,
   },
   dependencies = {
+    'folke/snacks.nvim', -- input provider
     'nvim-lua/plenary.nvim',
     'MunifTanjim/nui.nvim',
     'echasnovski/mini.pick',
@@ -47,6 +71,20 @@ return {
         file_types = { 'markdown', 'Avante' },
       },
       ft = { 'markdown', 'Avante' },
+    },
+    {
+      -- support for image pasting
+      'HakonHarnes/img-clip.nvim',
+      event = 'VeryLazy',
+      opts = {
+        default = {
+          embed_image_as_base64 = false,
+          prompt_for_file_name = false,
+          drag_and_drop = {
+            insert_mode = true,
+          },
+        },
+      },
     },
   },
 }

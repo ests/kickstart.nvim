@@ -761,6 +761,7 @@ require('lazy').setup({
     dependencies = {
       'onsails/lspkind-nvim',
       'folke/lazydev.nvim',
+      'Kaiser-Yang/blink-cmp-avante',
     },
     --- @module 'blink.cmp'
     --- @type blink.cmp.Config
@@ -862,7 +863,7 @@ require('lazy').setup({
           elseif vim.bo.filetype == 'lua' then
             return { 'lsp', 'buffer' }
           else
-            return { 'lsp', 'snippets', 'buffer' }
+            return { 'avante', 'lsp', 'snippets', 'buffer' }
           end
         end,
         -- per_filetype = {
@@ -870,6 +871,13 @@ require('lazy').setup({
         --   lua = { inherit_defaults = true, 'lazydev' },
         -- },
         providers = {
+          avante = {
+            module = 'blink-cmp-avante',
+            name = 'Avante',
+            opts = {
+              -- options for blink-cmp-avante
+            },
+          },
           lsp = {
             opts = {}, -- Passed to the source directly, varies by source
             max_items = 10,
