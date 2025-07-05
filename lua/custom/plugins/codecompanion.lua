@@ -22,10 +22,6 @@ return {
             model = {
               default = 'claude-sonnet-4-20250514',
             },
-            max_tokens = { default = 40000 },
-            thinking = {
-              default = { type = 'disabled' },
-            },
           },
           env = {
             api_key = 'cmd:envchain ests/personal/anthropic printenv ANTHROPIC_API_KEY',
