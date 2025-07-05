@@ -31,11 +31,11 @@ return {
       },
     },
     windows = {
-      width = 35,
+      width = 40,
       edit = { start_insert = true },
       ask = { start_insert = true },
       input = {
-        height = 12,
+        -- height = 12,
         provider = 'snacks',
         provider_opts = {
           title = 'Avante Input',
