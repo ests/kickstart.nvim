@@ -22,6 +22,9 @@ return {
             model = {
               default = 'claude-sonnet-4-20250514',
             },
+            extended_thinking = {
+              default = false,
+            },
           },
           env = {
             api_key = 'cmd:envchain ests/personal/anthropic printenv ANTHROPIC_API_KEY',
@@ -55,8 +58,8 @@ return {
       chat = {
         window = {
           layout = 'vertical', -- vertical|horizontal|buffer
-          width = 0.45,
-          height = 0.8,
+          width = 0.40,
+          height = 1,
           relative = 'editor',
           opts = {
             breakindent = true,

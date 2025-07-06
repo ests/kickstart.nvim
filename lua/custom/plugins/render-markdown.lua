@@ -1,5 +1,6 @@
 return {
   'MeanderingProgrammer/render-markdown.nvim',
+  enabled = false,
   ft = { 'markdown', 'codecompanion' },
   -- cmd = { 'RenderMarkdown' }, -- Remove this if using ft
   dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
