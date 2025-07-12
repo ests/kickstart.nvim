@@ -22,12 +22,24 @@ return {
             model = {
               default = 'claude-sonnet-4-20250514',
             },
-            extended_thinking = {
-              default = false,
-            },
+            -- extended_thinking = {
+            --   default = true,
+            -- },
           },
           env = {
             api_key = 'cmd:envchain ests/personal/anthropic printenv ANTHROPIC_API_KEY',
+          },
+        })
+      end,
+      gemini = function()
+        return require('codecompanion.adapters').extend('gemini', {
+          env = {
+            api_key = 'cmd:envchain ests/personal/anthropic printenv GEMINI_API_KEY',
+          },
+          schema = {
+            model = {
+              default = 'gemini-2.5-pro',
+            },
           },
         })
       end,
