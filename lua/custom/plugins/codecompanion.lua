@@ -22,9 +22,9 @@ return {
             model = {
               default = 'claude-sonnet-4-20250514',
             },
-            -- extended_thinking = {
-            --   default = true,
-            -- },
+            extended_thinking = {
+              default = false,
+            },
           },
           env = {
             api_key = 'cmd:envchain ests/personal/anthropic printenv ANTHROPIC_API_KEY',
