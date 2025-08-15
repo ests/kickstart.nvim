@@ -20,11 +20,25 @@ return {
         return require('codecompanion.adapters').extend('anthropic', {
           schema = {
             model = {
-              default = 'claude-sonnet-4-20250514',
+              default = 'claude-opus-4-1-20250805',
             },
             extended_thinking = {
-              default = false,
+              default = true,
             },
+            thinking_budget = {
+              default = 40000, -- 40k tokens for thorough code reasoning and explanations
+            },
+            max_tokens = {
+              default = 8192, -- Increased for longer code generation and explanations
+            },
+            temperature = {
+              default = 0.35, -- Low temperature for consistent, focused code generation
+            },
+            -- top_p = {
+            --   default = 0.95, -- Slightly reduced for more focused outputs
+            -- },
+            -- top_k is not typically used with Claude, leaving it nil
+            -- stop_sequences can be left nil unless you have specific needs
           },
           env = {
             api_key = 'cmd:envchain ests/personal/anthropic printenv ANTHROPIC_API_KEY',
