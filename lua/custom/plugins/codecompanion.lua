@@ -20,25 +20,25 @@ return {
         return require('codecompanion.adapters').extend('anthropic', {
           schema = {
             model = {
-              default = 'claude-opus-4-1-20250805',
+              default = 'claude-sonnet-4-20250514',
+              choices = {
+                'claude-opus-4-1-20250805', -- Latest and most capable
+                'claude-sonnet-4-20250514', -- Current default - balanced
+                'claude-3-5-haiku-20241022', -- Fastest and most cost-effective
+              },
             },
             extended_thinking = {
               default = true,
             },
             thinking_budget = {
-              default = 40000, -- 40k tokens for thorough code reasoning and explanations
+              default = 40000,
             },
             max_tokens = {
-              default = 8192, -- Increased for longer code generation and explanations
+              default = 45000,
             },
             temperature = {
-              default = 0.35, -- Low temperature for consistent, focused code generation
+              default = 0.35,
             },
-            -- top_p = {
-            --   default = 0.95, -- Slightly reduced for more focused outputs
-            -- },
-            -- top_k is not typically used with Claude, leaving it nil
-            -- stop_sequences can be left nil unless you have specific needs
           },
           env = {
             api_key = 'cmd:envchain ests/personal/anthropic printenv ANTHROPIC_API_KEY',
@@ -112,6 +112,7 @@ return {
     'CodeCompanionActions',
   },
   keys = {
+
     -- Core chat functionality
     { '<leader>aa', '<cmd>CodeCompanionChat Toggle<cr>', mode = { 'n', 'v' }, noremap = true, silent = true, desc = 'Agent Chat Toggle' },
     { '<leader>ad', '<cmd>CodeCompanionChat Add<cr>', mode = { 'n', 'v' }, noremap = true, silent = true, desc = 'Agent Chat Add' },
