@@ -27,14 +27,14 @@ return {
                 'claude-3-5-haiku-20241022', -- Fastest and most cost-effective
               },
             },
-            extended_thinking = {
-              default = true,
-            },
-            thinking_budget = {
-              default = 40000,
-            },
+            -- extended_thinking = {
+            --   default = true,
+            -- },
+            -- thinking_budget = {
+            --   default = 40000,
+            -- },
             max_tokens = {
-              default = 45000,
+              default = 8000, -- Updated to Claude 3.5 Haiku max (8K tokens)
             },
             temperature = {
               default = 0.35,
