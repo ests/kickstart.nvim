@@ -16,6 +16,23 @@ return {
     use_default_actions = true,
     use_default_prompt_library = true,
     adapters = {
+      openai = function()
+        return require('codecompanion.adapters').extend('openai', {
+          schema = {
+            model = {
+              default = 'gpt-5-mini',
+              choices = {
+                'gpt-5',
+                'gpt-5-mini',
+                'gpt-5-nano',
+              },
+            },
+          },
+          env = {
+            api_key = 'cmd:envchain ests/personal/openai printenv OPENAI_API_KEY',
+          },
+        })
+      end,
       anthropic = function()
         return require('codecompanion.adapters').extend('anthropic', {
           schema = {
@@ -27,12 +44,6 @@ return {
                 'claude-3-5-haiku-20241022', -- Fastest and most cost-effective
               },
             },
-            -- extended_thinking = {
-            --   default = true,
-            -- },
-            -- thinking_budget = {
-            --   default = 40000,
-            -- },
             max_tokens = {
               default = 8000, -- Updated to Claude 3.5 Haiku max (8K tokens)
             },
@@ -70,7 +81,7 @@ return {
         adapter = 'anthropic',
       },
       inline = {
-        adapter = 'anthropic',
+        adapter = 'openai',
       },
       agent = {
         adapter = 'anthropic',
