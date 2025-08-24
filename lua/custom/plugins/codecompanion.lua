@@ -48,7 +48,7 @@ return {
               default = 8000, -- Updated to Claude 3.5 Haiku max (8K tokens)
             },
             temperature = {
-              default = 0.35,
+              default = 0.2,
             },
           },
           env = {
