@@ -21,10 +21,6 @@ return {
           schema = {
             model = {
               default = 'deepseek-chat',
-              choices = {
-                'deepseek-reasoner',
-                'deepseek-chat',
-              },
             },
           },
           env = {
