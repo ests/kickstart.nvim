@@ -16,6 +16,22 @@ return {
     use_default_actions = true,
     use_default_prompt_library = true,
     adapters = {
+      deepseek = function()
+        return require('codecompanion.adapters').extend('deepseek', {
+          schema = {
+            model = {
+              default = 'deepseek-chat',
+              choices = {
+                'deepseek-reasoner',
+                'deepseek-chat',
+              },
+            },
+          },
+          env = {
+            api_key = 'cmd:envchain ests/personal/deepseek printenv DEEPSEEK_API_KEY',
+          },
+        })
+      end,
       openai = function()
         return require('codecompanion.adapters').extend('openai', {
           schema = {
@@ -78,13 +94,13 @@ return {
     },
     strategies = {
       chat = {
-        adapter = 'anthropic',
+        adapter = 'deepseek',
       },
       inline = {
-        adapter = 'openai',
+        adapter = 'deepseek',
       },
       agent = {
-        adapter = 'anthropic',
+        adapter = 'deepseek',
       },
     },
     display = {
