@@ -90,13 +90,13 @@ return {
     },
     strategies = {
       chat = {
-        adapter = 'deepseek',
+        adapter = 'anthropic',
       },
       inline = {
         adapter = 'deepseek',
       },
       agent = {
-        adapter = 'deepseek',
+        adapter = 'anthropic',
       },
     },
     display = {
