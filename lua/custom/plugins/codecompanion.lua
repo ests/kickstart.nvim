@@ -16,7 +16,18 @@ return {
     use_default_actions = true,
     use_default_prompt_library = true,
     opts = {
-      system_prompt = [[You are an AI programming assistant, working within the Neovim editor.
+      system_prompt = function(args)
+        -- Determine the user's machine
+        local machine = vim.uv.os_uname().sysname
+        if machine == 'Darwin' then
+          machine = 'Mac'
+        end
+        if machine:find 'Windows' then
+          machine = 'Windows'
+        end
+
+        return fmt(
+          [[You are an AI programming assistant, working within the Neovim editor.
 
 Formatting
 - Use Markdown. Do not use H1 or H2 headers.
@@ -59,6 +70,11 @@ Example code block format:
 { changed code }
 // ...existing code...
 ````]],
+          os.date '%B %d, %Y',
+          vim.version().major .. '.' .. vim.version().minor .. '.' .. vim.version().patch,
+          machine
+        )
+      end,
     },
     adapters = {
       http = {
