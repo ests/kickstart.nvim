@@ -25,8 +25,7 @@ return {
         if machine:find 'Windows' then
           machine = 'Windows'
         end
-
-        return fmt(
+        return string.format(
           [[You are an AI programming assistant, working within the Neovim editor.
 
 Formatting
