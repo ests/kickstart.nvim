@@ -6,19 +6,18 @@ return {
   },
   keys = {
     {
-      '<leader>-',
-      mode = { 'n', 'v' },
+      '<C-m>',
       '<cmd>Yazi<cr>',
       desc = 'Open yazi at the current file',
     },
     {
       -- Open in the current working directory
-      '<leader>y',
+      '<C-\\>',
       '<cmd>Yazi cwd<cr>',
       desc = 'Yazi in cwd',
     },
     {
-      '<leader>Y',
+      '<C-,>',
       '<cmd>Yazi toggle<cr>',
       desc = 'Resume the last yazi session',
     },
