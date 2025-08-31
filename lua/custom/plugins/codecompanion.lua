@@ -1,5 +1,10 @@
 return {
   'olimorris/codecompanion.nvim',
+  config = function(_, opts)
+    require('codecompanion').setup(opts)
+
+    vim.cmd [[cab cc CodeCompanion]]
+  end,
   opts = {
     extensions = {
       mcphub = {
@@ -110,7 +115,7 @@ Example code block format:
           return require('codecompanion.adapters').extend('anthropic', {
             schema = {
               model = {
-                default = 'claude-sonnet-4-20250514',
+                default = 'claude-3-5-haiku-20241022',
                 choices = {
                   'claude-opus-4-1-20250805', -- Latest and most capable
                   'claude-sonnet-4-20250514', -- Current default - balanced
@@ -152,7 +157,7 @@ Example code block format:
     },
     strategies = {
       chat = {
-        adapter = 'anthropic',
+        adapter = 'deepseek',
       },
       inline = {
         adapter = 'deepseek',
