@@ -171,7 +171,7 @@ vim.keymap.set('n', '<leader>vy', '`[V`]', { desc = 'Visual Line Select Last Cha
 vim.keymap.set('n', '<leader>fy', '`[V`]=`[', { desc = 'Format Last Changed Text' })
 
 -- copy current file with path
-vim.keymap.set('n', '<leader>yf', "<cmd>lua vim.fn.setreg('+', vim.fn.expand('%:p'))<CR>", { desc = 'Copy filename', noremap = true, silent = true })
+-- vim.keymap.set('n', '<leader>yf', "<cmd>lua vim.fn.setreg('+', vim.fn.expand('%:p'))<CR>", { desc = 'Copy filename', noremap = true, silent = true })
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })

@@ -6,7 +6,7 @@ return {
   },
   keys = {
     {
-      '<C-m>',
+      '<leader>y',
       '<cmd>Yazi<cr>',
       desc = 'Open yazi at the current file',
     },
@@ -17,7 +17,7 @@ return {
       desc = 'Yazi in cwd',
     },
     {
-      '<C-,>',
+      '<C-y>',
       '<cmd>Yazi toggle<cr>',
       desc = 'Resume the last yazi session',
     },
