@@ -354,7 +354,6 @@ require('lazy').setup({
     event = 'VimEnter',
     dependencies = {
       'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope-live-grep-args.nvim',
       { 'nvim-telescope/telescope-github.nvim' },
       { -- If encountering errors, see telescope-fzf-native README for installation instructions
         'natecraddock/telescope-zf-native.nvim',
@@ -375,8 +374,6 @@ require('lazy').setup({
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
-      local lga_actions = require 'telescope-live-grep-args.actions'
-      local live_grep_args_shortcuts = require 'telescope-live-grep-args.shortcuts'
       require('telescope').setup {
         defaults = {
           layout_strategy = 'vertical',
@@ -392,42 +389,24 @@ require('lazy').setup({
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
-          live_grep_args = {
-            auto_quoting = true, -- enable/disable auto-quoting
-            -- define mappings, e.g.
-            mappings = { -- extend mappings
-              i = {
-                ['<C-k>'] = lga_actions.quote_prompt(),
-                ['<C-i>'] = lga_actions.quote_prompt { postfix = ' --iglob ' },
-                -- freeze the current list and start a fuzzy search in the frozen list
-                ['<C-space>'] = lga_actions.to_fuzzy_refine,
-              },
-            },
-            -- ... also accepts theme settings, for example:
-            -- theme = "dropdown", -- use dropdown theme
-            -- theme = { }, -- use own theme spec
-            -- layout_config = { mirror=true }, -- mirror preview pane
-          },
         },
       }
 
       -- Enable Telescope extensions if they are installed
       pcall(require('telescope').load_extension, 'zf_native')
-      pcall(require('telescope').load_extension, 'live_grep_args')
       pcall(require('telescope').load_extension, 'ui-select')
       pcall(require('telescope').load_extension, 'gh')
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
-      local extensions = require('telescope').extensions
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
       vim.keymap.set('n', '<leader>e', builtin.find_files, { desc = '[S]earch [F]iles' })
-      -- vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
-      vim.keymap.set('n', '<leader>sw', live_grep_args_shortcuts.grep_word_under_cursor, { desc = '[S]earch current [W]ord' })
-      vim.keymap.set('n', '<leader>sg', extensions.live_grep_args.live_grep_args, { desc = '[S]earch by [G]rep' })
-      vim.keymap.set('n', '<leader>g', extensions.live_grep_args.live_grep_args, { desc = '[S]earch by [G]rep' })
+      vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
+      vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
+      vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+      vim.keymap.set('n', '<leader>g', builtin.live_grep, { desc = '[S]earch by [G]rep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
