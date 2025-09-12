@@ -380,11 +380,20 @@ require('lazy').setup({
           layout_config = {
             vertical = { width = 0.9, height = 0.95 },
           },
+          -- Use fd for file finding (respects .fdignore)
+          find_command = { 'fd', '--type', 'f', '--hidden', '--exclude', '.git', '--strip-cwd-prefix' },
           --   mappings = {
           --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
           --   },
         },
-        -- pickers = {}
+        pickers = {
+          find_files = {
+            -- Ensure fd is used for find_files picker
+            find_command = { 'fd', '--type', 'f', '--hidden', '--exclude', '.git', '--strip-cwd-prefix' },
+          },
+          -- live_grep and grep_string will automatically use ripgrep (rg) if available
+          -- This is the default behavior and doesn't need explicit configuration
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
