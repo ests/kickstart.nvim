@@ -89,9 +89,10 @@ vim.o.splitbelow = true
 vim.o.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
-vim.opt_local.tabstop = 2
-vim.opt_local.shiftwidth = 2
-vim.opt_local.expandtab = true
+-- Set global default indentation to 2 spaces
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
 
 -- Create a new augroup for FileType settings
 local filetype_settings_group = vim.api.nvim_create_augroup('FileTypeSettings', { clear = true })
@@ -116,7 +117,18 @@ vim.api.nvim_create_autocmd('FileType', {
   callback = function()
     vim.opt_local.tabstop = 2
     vim.opt_local.shiftwidth = 2
-    vim.opt_local.expandtab = false
+    vim.opt_local.expandtab = true -- Use spaces for JSON too
+  end,
+})
+
+-- JavaScript
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+  group = filetype_settings_group,
+  callback = function()
+    vim.opt_local.tabstop = 2
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.expandtab = true -- Use spaces for JavaScript/TypeScript
   end,
 })
 
