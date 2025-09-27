@@ -81,6 +81,32 @@ Example code block format:
       end,
     },
     adapters = {
+      acp = {
+        claude_code = function()
+          -- FIX: does not work for some reason
+          return require('codecompanion.adapters').extend('claude_code', {
+            -- schema = {
+            --   model = {
+            --     default = 'claude-sonnet-4-20250514',
+            --     choices = {
+            --       'claude-sonnet-4-20250514', -- Current default - balanced
+            --       'claude-3-5-haiku-20241022', -- Fastest and most cost-effective
+            --       'claude-opus-4-1-20250805', -- Latest and most capable
+            --     },
+            --   },
+            -- max_tokens = {
+            --   default = 8000, -- Updated to Claude 3.5 Haiku max (8K tokens)
+            -- },
+            -- temperature = {
+            --   default = 0.3,
+            -- },
+            -- },
+            env = {
+              CLAUDE_CODE_OAUTH_TOKEN = 'cmd:envchain ests/personal/anthropic printenv CLAUDE_PRO_KEY',
+            },
+          })
+        end,
+      },
       http = {
         deepseek = function()
           return require('codecompanion.adapters').extend('deepseek', {
@@ -111,29 +137,29 @@ Example code block format:
             },
           })
         end,
-        anthropic = function()
-          return require('codecompanion.adapters').extend('anthropic', {
-            schema = {
-              model = {
-                default = 'claude-3-5-haiku-20241022',
-                choices = {
-                  'claude-opus-4-1-20250805', -- Latest and most capable
-                  'claude-sonnet-4-20250514', -- Current default - balanced
-                  'claude-3-5-haiku-20241022', -- Fastest and most cost-effective
-                },
-              },
-              max_tokens = {
-                default = 8000, -- Updated to Claude 3.5 Haiku max (8K tokens)
-              },
-              temperature = {
-                default = 0.2,
-              },
-            },
-            env = {
-              api_key = 'cmd:envchain ests/personal/anthropic printenv ANTHROPIC_API_KEY',
-            },
-          })
-        end,
+        -- anthropic = function()
+        --   return require('codecompanion.adapters').extend('claude_code', {
+        --     -- schema = {
+        --     --   model = {
+        --     --     default = 'claude-sonnet-4-20250514',
+        --     --     choices = {
+        --     --       'claude-sonnet-4-20250514', -- Current default - balanced
+        --     --       'claude-3-5-haiku-20241022', -- Fastest and most cost-effective
+        --     --       'claude-opus-4-1-20250805', -- Latest and most capable
+        --     --     },
+        --     --   },
+        --     -- max_tokens = {
+        --     --   default = 8000, -- Updated to Claude 3.5 Haiku max (8K tokens)
+        --     -- },
+        --     -- temperature = {
+        --     --   default = 0.3,
+        --     -- },
+        --     -- },
+        --     env = {
+        --       CLAUDE_CODE_OAUTH_TOKEN = 'cmd:envchain ests/personal/anthropic printenv CLAUDE_PRO_KEY',
+        --     },
+        --   })
+        -- end,
         gemini = function()
           return require('codecompanion.adapters').extend('gemini', {
             env = {
@@ -157,13 +183,13 @@ Example code block format:
     },
     strategies = {
       chat = {
-        adapter = 'deepseek',
+        adapter = 'openai',
       },
       inline = {
-        adapter = 'deepseek',
+        adapter = 'openai',
       },
       agent = {
-        adapter = 'anthropic',
+        adapter = 'openai',
       },
     },
     display = {

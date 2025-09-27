@@ -898,10 +898,10 @@ require('lazy').setup({
       fuzzy = {
         implementation = 'prefer_rust_with_warning',
         max_typos = function()
-          return 0
+          return 1
         end,
-        use_frecency = true,
-        use_proximity = true,
+        frequency = { enabled = false },
+        use_proximity = false,
       },
 
       -- Shows a signature help window while you type arguments for a function

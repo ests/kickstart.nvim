@@ -12,18 +12,15 @@ return {
   ---@module 'avante'
   ---@type avante.Config
   opts = {
-    provider = 'deepseek',
-    providers = {
-      deepseek = {
-        __inherited_from = 'openai',
-        endpoint = 'https://api.deepseek.com',
-        model = 'deepseek-coder',
-        api_key_name = 'cmd:envchain ests/personal/deepseek printenv DEEPSEEK_API_KEY',
-        -- timeout = 30000,
-        -- extra_request_body = {
-        --   temperature = 0.75,
-        --   max_tokens = 40000,
-        -- },
+    provider = 'claude-code',
+    acp_providers = {
+      ['claude-code'] = {
+        command = 'npx',
+        args = { '@zed-industries/claude-code-acp' },
+        env = {
+          NODE_NO_WARNINGS = '1',
+          ANTHROPIC_API_KEY = 'cmd:envchain ests/personal/anthropic printenv CLAUDE_PRO_KEY',
+        },
       },
     },
     hints = { enabled = true }, -- ??
