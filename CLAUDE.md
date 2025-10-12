@@ -22,23 +22,26 @@ This is a Neovim configuration based on the Kickstart.nvim template with extensi
 - **Treesitter**: Full syntax highlighting and text objects
 
 ### Navigation and File Management
-- **Telescope**: Primary fuzzy finder with fd and ripgrep integration
+- **Telescope**: Primary fuzzy finder with fd and ripgrep integration (uses telescope-zf-native for fuzzy matching)
 - **Oil**: File manager accessible via `-` key
 - **Yazi**: Advanced file manager integration
 - **Grapple**: Project file bookmarking
+- **Hop**: Enhanced motion plugin for quick character-based jumping (overrides f/F/t/T)
+- **Session Manager**: Automatic session management with manual save/load capability
 
 ### Development Tools
 - **Testing**: vim-test with toggleterm integration
 - **Git**: Gitsigns, Neogit for Git operations
-- **AI Assistance**: CodeCompanion with multiple provider support (OpenAI, DeepSeek, Gemini)
+- **AI Assistance**: CodeCompanion with multiple provider support (Claude Code via ACP adapter, OpenAI, DeepSeek, Gemini)
+- **MCP Integration**: mcphub.nvim for Model Context Protocol support with CodeCompanion
 - **Terminal**: Toggleterm for integrated terminal management
 
 ### UI Enhancements
 - **Theme**: Kanagawa colorscheme
 - **Statusline**: Custom lualine configuration
-- **Buffer Management**: Bufferline and buffer navigation
+- **Buffer Management**: Bufferline with numbered tabs, mouse support, and LSP diagnostics
 - **Start Screen**: Alpha dashboard
-- **Notifications**: Snacks.nvim for enhanced notifications
+- **Notifications & Utilities**: Snacks.nvim (bigfile handling, quickfile, statuscolumn, input, picker, word highlighting)
 
 ## File Structure Conventions
 
@@ -111,17 +114,30 @@ gri - Go to implementation
 - `,,` - Toggle between last two buffers
 - `<leader>x` - Close current buffer (using Bdelete)
 - `<C-s>` - Save file (works in normal, insert, visual modes)
+- `<C-x>` - Save all buffers and quit
+- `<Tab>/<S-Tab>` - Cycle through buffers (next/previous)
+- `<leader>1-7` - Jump to buffer by position
+- `go` - Pick buffer to jump to
+- `gC` - Pick buffer to close
 
 ### Visual Mode Enhancements
 - `J/K` - Move selected lines up/down
 - `</>`  - Indent left/right (maintains selection)
 
-### AI Integration
+### Motion Enhancements (Hop)
+- `f` - Hop to character forward (enhanced f motion)
+- `F` - Hop to character backward (enhanced F motion)
+- `t` - Hop till character forward (enhanced t motion)
+- `T` - Hop till character backward (enhanced T motion)
+
+### AI Integration (CodeCompanion)
 - `<leader>aa` - Toggle CodeCompanion chat
 - `<leader>ad` - Add to CodeCompanion chat
 - `<leader>ap` - Open CodeCompanion actions
 - `<leader>ai` - Inline CodeCompanion
-- `<leader>as` - Quick ask CodeCompanion
+- `<leader>aq` - Quick command
+- `<leader>as` - Quick ask CodeCompanion (prompts for input)
+- `:cc` - Command abbreviation for `:CodeCompanion`
 
 ## Configuration Patterns
 
@@ -153,3 +169,25 @@ gri - Go to implementation
 - **Text Search**: Uses `ripgrep` (rg)
 - **Terminal**: Integrated via toggleterm
 - **Platform**: Optimized for macOS (Darwin)
+- **Session Management**: Automatic session save/restore (disabled autoload, autosaves on exit)
+- **MCP Support**: mcphub.nvim with global `mcp-hub` npm package
+
+## Additional Notes
+
+### CodeCompanion Configuration
+- **Default adapter**: Claude Code (ACP adapter) for chat, inline, and agent strategies
+- **Memory system**: Reads from `~/.claude/CLAUDE.md`, `CLAUDE.md`, and `CLAUDE.local.md`
+- **MCP integration**: Resources converted to #variables, prompts as /slash commands
+- **Credentials**: Managed via `envchain` for security
+
+### Bufferline Features
+- Numbered buffers for quick jumping (`<leader>1-7`)
+- Mouse support for buffer selection and closing
+- LSP diagnostics displayed in buffer tabs
+- Uses `Bdelete` for safe buffer closing (preserves window layout)
+
+### Telescope Configuration
+- Vertical layout (90% width, 95% height)
+- Uses `fd` for file finding (respects .fdignore)
+- Uses `ripgrep` for live grep
+- GitHub integration via telescope-gh extension

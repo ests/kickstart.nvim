@@ -900,8 +900,8 @@ require('lazy').setup({
         max_typos = function()
           return 1
         end,
-        frequency = { enabled = false },
-        use_proximity = false,
+        frecency = { enabled = true },
+        use_proximity = true,
       },
 
       -- Shows a signature help window while you type arguments for a function

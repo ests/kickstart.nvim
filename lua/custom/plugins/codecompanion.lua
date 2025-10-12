@@ -6,6 +6,22 @@ return {
     vim.cmd [[cab cc CodeCompanion]]
   end,
   opts = {
+    memory = {
+      opts = {
+        chat = {
+          enabled = true,
+          default_params = 'watch',
+        },
+      },
+      claude = {
+        description = 'Memory files for Claude Code users',
+        files = {
+          '~/.claude/CLAUDE.md',
+          'CLAUDE.md',
+          'CLAUDE.local.md',
+        },
+      },
+    },
     extensions = {
       mcphub = {
         callback = 'mcphub.extensions.codecompanion',
@@ -83,24 +99,7 @@ Example code block format:
     adapters = {
       acp = {
         claude_code = function()
-          -- FIX: does not work for some reason
           return require('codecompanion.adapters').extend('claude_code', {
-            -- schema = {
-            --   model = {
-            --     default = 'claude-sonnet-4-20250514',
-            --     choices = {
-            --       'claude-sonnet-4-20250514', -- Current default - balanced
-            --       'claude-3-5-haiku-20241022', -- Fastest and most cost-effective
-            --       'claude-opus-4-1-20250805', -- Latest and most capable
-            --     },
-            --   },
-            -- max_tokens = {
-            --   default = 8000, -- Updated to Claude 3.5 Haiku max (8K tokens)
-            -- },
-            -- temperature = {
-            --   default = 0.3,
-            -- },
-            -- },
             env = {
               CLAUDE_CODE_OAUTH_TOKEN = 'cmd:envchain ests/personal/anthropic printenv CLAUDE_PRO_KEY',
             },
@@ -137,29 +136,6 @@ Example code block format:
             },
           })
         end,
-        -- anthropic = function()
-        --   return require('codecompanion.adapters').extend('claude_code', {
-        --     -- schema = {
-        --     --   model = {
-        --     --     default = 'claude-sonnet-4-20250514',
-        --     --     choices = {
-        --     --       'claude-sonnet-4-20250514', -- Current default - balanced
-        --     --       'claude-3-5-haiku-20241022', -- Fastest and most cost-effective
-        --     --       'claude-opus-4-1-20250805', -- Latest and most capable
-        --     --     },
-        --     --   },
-        --     -- max_tokens = {
-        --     --   default = 8000, -- Updated to Claude 3.5 Haiku max (8K tokens)
-        --     -- },
-        --     -- temperature = {
-        --     --   default = 0.3,
-        --     -- },
-        --     -- },
-        --     env = {
-        --       CLAUDE_CODE_OAUTH_TOKEN = 'cmd:envchain ests/personal/anthropic printenv CLAUDE_PRO_KEY',
-        --     },
-        --   })
-        -- end,
         gemini = function()
           return require('codecompanion.adapters').extend('gemini', {
             env = {
@@ -183,13 +159,13 @@ Example code block format:
     },
     strategies = {
       chat = {
-        adapter = 'openai',
+        adapter = 'claude_code',
       },
       inline = {
-        adapter = 'openai',
+        adapter = 'deepseek',
       },
       agent = {
-        adapter = 'openai',
+        adapter = 'claude_code',
       },
     },
     display = {
