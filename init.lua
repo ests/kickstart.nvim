@@ -50,9 +50,10 @@ vim.o.laststatus = 3
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.schedule(function()
-  vim.o.clipboard = 'unnamedplus'
-end)
+-- Clipboard is set manually via explicit registers
+-- Use '+y to yank to system clipboard
+-- Use '+p to paste from system clipboard
+vim.o.clipboard = '' -- Disable automatic clipboard sync
 
 -- Enable break indent
 vim.o.breakindent = true
@@ -175,9 +176,6 @@ vim.o.confirm = true
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-
--- Visual line select last yanked/changed text
-vim.keymap.set('n', '<leader>vy', '`[V`]', { desc = 'Visual Line Select Last Changed Text' })
 
 -- Visual line select, format, and return to normal mode
 vim.keymap.set('n', '<leader>fy', '`[V`]=`[', { desc = 'Format Last Changed Text' })
@@ -932,7 +930,7 @@ require('lazy').setup({
       -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
-      require('mini.surround').setup()
+      -- require('mini.surround').setup()
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,

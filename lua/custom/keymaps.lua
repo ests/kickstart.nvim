@@ -53,4 +53,8 @@ keymap('v', '>', '>gv', { noremap = true, silent = true, desc = 'Indent right' }
 -- vim.cmd [[iab <expr> dtl strftime("%y.%m.%d")]]
 -- vim.cmd [[iab <expr> dts strftime("%m.%d")]]
 
+-- Easy system clipboard paste
+keymap({'n', 'v'}, '<leader>v', '"+p', { noremap = true, silent = true, desc = 'Paste from system clipboard' })
+keymap({'n', 'v'}, '<leader>V', '"+P', { noremap = true, silent = true, desc = 'Paste before cursor from system clipboard' })
+
 return {}
