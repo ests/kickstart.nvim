@@ -152,16 +152,30 @@ vim.o.cursorline = false
 vim.o.scrolloff = 10
 
 -- sets safe default settings
-vim.o.directory = '/tmp/vim/swap'
+-- Create directories for swap, backup, undo, and view if they don't exist
+local data_dir = vim.fn.stdpath 'data'
+local temp_dirs = {
+  swap = data_dir .. '/swap',
+  backup = data_dir .. '/backup',
+  undo = data_dir .. '/undo',
+  viewdir = data_dir .. '/viewdir',
+}
+for _, dir in pairs(temp_dirs) do
+  if vim.fn.isdirectory(dir) == 0 then
+    vim.fn.mkdir(dir, 'p')
+  end
+end
+
+vim.o.directory = temp_dirs.swap
 vim.o.writebackup = true
 vim.o.backup = true
 vim.o.backupcopy = 'auto'
-vim.o.backupdir = '/tmp/vim/backup'
+vim.o.backupdir = temp_dirs.backup
 -- Save undo history
 vim.o.undofile = true
 vim.o.ul = 500 -- undolevel
-vim.o.undodir = '/tmp/vim/undo'
-vim.o.viewdir = '/tmp/vim/viewdir'
+vim.o.undodir = temp_dirs.undo
+vim.o.viewdir = temp_dirs.viewdir
 vim.o.conceallevel = 0
 -- hybrid relativenumbers
 vim.o.relativenumber = true
