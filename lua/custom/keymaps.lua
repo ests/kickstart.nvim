@@ -57,4 +57,8 @@ keymap('v', '>', '>gv', { noremap = true, silent = true, desc = 'Indent right' }
 keymap({'n', 'v'}, '<leader>v', '"+p', { noremap = true, silent = true, desc = 'Paste from system clipboard' })
 keymap({'n', 'v'}, '<leader>V', '"+P', { noremap = true, silent = true, desc = 'Paste before cursor from system clipboard' })
 
+-- Copy to system clipboard
+keymap('v', '<leader>y', '"+y', { noremap = true, silent = true, desc = 'Copy selection to system clipboard' })
+keymap('n', '<leader>y', '"+yy', { noremap = true, silent = true, desc = 'Copy line to system clipboard' })
+
 return {}
