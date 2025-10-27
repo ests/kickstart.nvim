@@ -33,7 +33,6 @@ This is a Neovim configuration based on the Kickstart.nvim template with extensi
 - **Testing**: vim-test with toggleterm integration
 - **Git**: Gitsigns, Neogit for Git operations
 - **AI Assistance**: CodeCompanion with multiple provider support (Claude Code via ACP adapter, OpenAI, DeepSeek, Gemini)
-- **MCP Integration**: mcphub.nvim for Model Context Protocol support with CodeCompanion
 - **Terminal**: Toggleterm for integrated terminal management
 
 ### UI Enhancements
@@ -170,14 +169,12 @@ gri - Go to implementation
 - **Terminal**: Integrated via toggleterm
 - **Platform**: Optimized for macOS (Darwin)
 - **Session Management**: Automatic session save/restore (disabled autoload, autosaves on exit)
-- **MCP Support**: mcphub.nvim with global `mcp-hub` npm package
 
 ## Additional Notes
 
 ### CodeCompanion Configuration
 - **Default adapter**: Claude Code (ACP adapter) for chat, inline, and agent strategies
 - **Memory system**: Reads from `~/.claude/CLAUDE.md`, `CLAUDE.md`, and `CLAUDE.local.md`
-- **MCP integration**: Resources converted to #variables, prompts as /slash commands
 - **Credentials**: Managed via `envchain` for security
 
 ### Bufferline Features
