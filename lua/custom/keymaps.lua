@@ -40,9 +40,9 @@ keymap({ 'n', 'v' }, '<c-l>', '<c-w>l', { noremap = true, silent = true, desc = 
 -- toggle last buffers
 keymap('n', ',,', '<cmd>b#<cr>', { noremap = true, silent = true, desc = 'Toggle last buffer' })
 
--- visual mode move lines
-keymap('v', 'K', ":m '<-2<CR>gv=gv", { noremap = true, desc = 'Move line up' })
-keymap('v', 'J', ":m '>+1<CR>gv=gv", { noremap = true, desc = 'Move line down' })
+-- move lines in visual mode
+keymap('v', '<A-j>', ":m '>+1<CR>gv=gv", { noremap = true, desc = 'Move selection down' })
+keymap('v', '<A-k>', ":m '<-2<CR>gv=gv", { noremap = true, desc = 'Move selection up' })
 
 -- visual indent
 keymap('v', '<', '<gv', { noremap = true, silent = true, desc = 'Indent left' })
